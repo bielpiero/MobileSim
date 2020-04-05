@@ -179,7 +179,7 @@ endif	 #ifdef MOBILESIM_RELEASE
 
 
 ifdef MOBILESIM_PROFILE
-CXX+=-pg -g -O0
+CXX+=-pg -g -O0 -std=c++14
 CC+=-pg -g -O0
 STAGE_CONFIGURE_ARGS+=--enable-profile --enable-debug --disable-optimize
 endif	 #MOBILESIM_PROFILE
