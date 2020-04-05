@@ -21,9 +21,9 @@
  *
  */
 
-#include "MobileSim.hh"
-#include "EmulatePioneer.hh"
-#include "MapLoader.hh"
+#include "MobileSim.h"
+#include "EmulatePioneer.h"
+#include "MapLoader.h"
 #include "ArMap.h"
 #include "ArGPSCoords.h"
 
@@ -53,8 +53,8 @@
 #include "ArRobotPacketSender.h"
 #include "ClientPacketReceiver.h"
 
-#include "MobileSim.hh"
-#include "Socket.hh"
+#include "MobileSim.h"
+#include "Socket.h"
 
 /* Turn these on to get debugging messages: */
 //#define DEBUG_SIP_VALUES 1  // Every SIP! Very frequent!

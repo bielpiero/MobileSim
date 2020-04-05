@@ -1,4 +1,4 @@
-main.o: main.cc stage/src/stage.h /usr/include/glib-2.0/glib.h \
+main.o: main.cpp stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
  /usr/include/glib-2.0/glib/gmacros.h \
@@ -527,19 +527,19 @@ main.o: main.cc stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/local/Aria/include/ArMapObject.h \
  /usr/local/Aria/include/ArMapUtils.h \
  /usr/local/Aria/include/ArGPSCoords.h /usr/local/Aria/include/ArSocket.h \
- MobileSim.hh Config.hh /usr/local/Aria/include/ArConfig.h util.h \
- StageInterface.hh RobotInterface.hh MapLoader.hh \
+ MobileSim.h MobileSimConfig.h /usr/local/Aria/include/ArConfig.h util.h \
+ StageInterface.h RobotInterface.h MapLoader.h \
  /usr/local/Aria/include/ArFunctor.h \
  /usr/local/Aria/include/ArGPSCoords.h \
  /usr/local/Aria/include/ArRobotPacket.h \
- /usr/local/Aria/include/ArBasePacket.h EmulatePioneer.hh \
+ /usr/local/Aria/include/ArBasePacket.h EmulatePioneer.h \
  /usr/local/Aria/include/ArTcpConnection.h \
  /usr/local/Aria/include/ArDeviceConnection.h \
  /usr/local/Aria/include/ArSocket.h ClientPacketReceiver.h \
  /usr/local/Aria/include/ArRobotPacketSender.h \
- /usr/local/Aria/include/ArRobotPacket.h RobotFactory.hh \
- /usr/local/Aria/include/ArMutex.h StageRobotFactory.hh Socket.hh \
- NetworkDiscovery.hh /usr/local/Aria/include/Aria.h \
+ /usr/local/Aria/include/ArRobotPacket.h RobotFactory.h \
+ /usr/local/Aria/include/ArMutex.h StageRobotFactory.h Socket.h \
+ NetworkDiscovery.h /usr/local/Aria/include/Aria.h \
  /usr/local/Aria/include/ArSerialConnection.h \
  /usr/local/Aria/include/ArTcpConnection.h \
  /usr/local/Aria/include/ArRobotPacketSender.h \
@@ -639,7 +639,7 @@ main.o: main.cc stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/local/Aria/include/ArS3Series.h \
  /usr/local/Aria/include/ArSZSeries.h \
  /usr/local/Aria/include/ArASyncTask.h
-EmulatePioneer.o: EmulatePioneer.cc MobileSim.hh \
+EmulatePioneer.o: EmulatePioneer.cpp MobileSim.h \
  /usr/local/Aria/include/ariaUtil.h \
  /usr/local/Aria/include/ariaTypedefs.h /usr/local/Aria/include/ArLog.h \
  /usr/local/Aria/include/ArMutex.h /usr/local/Aria/include/ArFunctor.h \
@@ -647,7 +647,7 @@ EmulatePioneer.o: EmulatePioneer.cc MobileSim.hh \
  /usr/local/Aria/include/ArArgumentParser.h \
  /usr/local/Aria/include/ArArgumentBuilder.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
- EmulatePioneer.hh RobotInterface.hh MapLoader.hh stage/src/stage.h \
+ EmulatePioneer.h RobotInterface.h MapLoader.h stage/src/stage.h \
  /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \
  /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
@@ -1176,16 +1176,16 @@ EmulatePioneer.o: EmulatePioneer.cc MobileSim.hh \
  /usr/local/Aria/include/ArMapUtils.h \
  /usr/local/Aria/include/ArHasFileName.h \
  /usr/local/Aria/include/ArGPSCoords.h \
- /usr/local/Aria/include/ArCommands.h Socket.hh
-RobotFactory.o: RobotFactory.cc RobotFactory.hh RobotInterface.hh \
- MobileSim.hh /usr/local/Aria/include/ariaUtil.h \
+ /usr/local/Aria/include/ArCommands.h Socket.h
+RobotFactory.o: RobotFactory.cpp RobotFactory.h RobotInterface.h \
+ MobileSim.h /usr/local/Aria/include/ariaUtil.h \
  /usr/local/Aria/include/ariaTypedefs.h /usr/local/Aria/include/ArLog.h \
  /usr/local/Aria/include/ArMutex.h /usr/local/Aria/include/ArFunctor.h \
  /usr/local/Aria/include/ariaOSDef.h \
  /usr/local/Aria/include/ArArgumentParser.h \
  /usr/local/Aria/include/ArArgumentBuilder.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
- MapLoader.hh stage/src/stage.h /usr/include/glib-2.0/glib.h \
+ MapLoader.h stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
  /usr/include/glib-2.0/glib/gmacros.h \
@@ -1702,22 +1702,22 @@ RobotFactory.o: RobotFactory.cc RobotFactory.hh RobotInterface.hh \
  /usr/local/Aria/include/ArRobotPacket.h \
  /usr/local/Aria/include/ArBasePacket.h \
  /usr/local/Aria/include/ariaUtil.h /usr/local/Aria/include/ArSocket.h \
- /usr/local/Aria/include/ArMutex.h EmulatePioneer.hh \
+ /usr/local/Aria/include/ArMutex.h EmulatePioneer.h \
  /usr/local/Aria/include/ArTcpConnection.h \
  /usr/local/Aria/include/ArDeviceConnection.h \
  /usr/local/Aria/include/ArSocket.h ClientPacketReceiver.h \
  /usr/local/Aria/include/ArRobotPacketSender.h \
- /usr/local/Aria/include/ArRobotPacket.h Socket.hh \
- /usr/local/Aria/include/ArASyncTask.h ListeningSocket.hh
-StageInterface.o: StageInterface.cc StageInterface.hh RobotInterface.hh \
- MobileSim.hh /usr/local/Aria/include/ariaUtil.h \
+ /usr/local/Aria/include/ArRobotPacket.h Socket.h \
+ /usr/local/Aria/include/ArASyncTask.h ListeningSocket.h
+StageInterface.o: StageInterface.cpp StageInterface.h RobotInterface.h \
+ MobileSim.h /usr/local/Aria/include/ariaUtil.h \
  /usr/local/Aria/include/ariaTypedefs.h /usr/local/Aria/include/ArLog.h \
  /usr/local/Aria/include/ArMutex.h /usr/local/Aria/include/ArFunctor.h \
  /usr/local/Aria/include/ariaOSDef.h \
  /usr/local/Aria/include/ArArgumentParser.h \
  /usr/local/Aria/include/ArArgumentBuilder.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
- MapLoader.hh stage/src/stage.h /usr/include/glib-2.0/glib.h \
+ MapLoader.h stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
  /usr/include/glib-2.0/glib/gmacros.h \
@@ -2233,14 +2233,14 @@ StageInterface.o: StageInterface.cc StageInterface.hh RobotInterface.hh \
  /usr/local/Aria/include/ArGPSCoords.h \
  /usr/local/Aria/include/ArRobotPacket.h \
  /usr/local/Aria/include/ArBasePacket.h \
- /usr/local/Aria/include/ariaUtil.h EmulatePioneer.hh \
+ /usr/local/Aria/include/ariaUtil.h EmulatePioneer.h \
  /usr/local/Aria/include/ArSocket.h \
  /usr/local/Aria/include/ArTcpConnection.h \
  /usr/local/Aria/include/ArDeviceConnection.h \
  /usr/local/Aria/include/ArSocket.h ClientPacketReceiver.h \
  /usr/local/Aria/include/ArRobotPacketSender.h \
  /usr/local/Aria/include/ArRobotPacket.h
-StageRobotFactory.o: StageRobotFactory.cc MobileSim.hh \
+StageRobotFactory.o: StageRobotFactory.cpp MobileSim.h \
  /usr/local/Aria/include/ariaUtil.h \
  /usr/local/Aria/include/ariaTypedefs.h /usr/local/Aria/include/ArLog.h \
  /usr/local/Aria/include/ArMutex.h /usr/local/Aria/include/ArFunctor.h \
@@ -2248,7 +2248,7 @@ StageRobotFactory.o: StageRobotFactory.cc MobileSim.hh \
  /usr/local/Aria/include/ArArgumentParser.h \
  /usr/local/Aria/include/ArArgumentBuilder.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
- StageRobotFactory.hh RobotFactory.hh RobotInterface.hh MapLoader.hh \
+ StageRobotFactory.h RobotFactory.h RobotInterface.h MapLoader.h \
  stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
@@ -2766,8 +2766,8 @@ StageRobotFactory.o: StageRobotFactory.cc MobileSim.hh \
  /usr/local/Aria/include/ArRobotPacket.h \
  /usr/local/Aria/include/ArBasePacket.h \
  /usr/local/Aria/include/ariaUtil.h /usr/local/Aria/include/ArSocket.h \
- /usr/local/Aria/include/ArMutex.h StageInterface.hh
-CrashHandler.o: CrashHandler.cc MobileSim.hh \
+ /usr/local/Aria/include/ArMutex.h StageInterface.h
+CrashHandler.o: CrashHandler.cpp MobileSim.h \
  /usr/local/Aria/include/ariaUtil.h \
  /usr/local/Aria/include/ariaTypedefs.h /usr/local/Aria/include/ArLog.h \
  /usr/local/Aria/include/ArMutex.h /usr/local/Aria/include/ArFunctor.h \
@@ -3286,19 +3286,19 @@ CrashHandler.o: CrashHandler.cc MobileSim.hh \
  /usr/include/gtk-2.0/gtk/gtkoptionmenu.h \
  /usr/include/gtk-2.0/gtk/gtkpreview.h \
  /usr/include/gtk-2.0/gtk/gtktipsquery.h stage/src/blinker.h \
- stage/src/config.h stage/replace/replace.h RobotFactory.hh \
- RobotInterface.hh MapLoader.hh /usr/local/Aria/include/ArFunctor.h \
+ stage/src/config.h stage/replace/replace.h RobotFactory.h \
+ RobotInterface.h MapLoader.h /usr/local/Aria/include/ArFunctor.h \
  /usr/local/Aria/include/ArGPSCoords.h \
  /usr/local/Aria/include/ArRobotPacket.h \
  /usr/local/Aria/include/ArBasePacket.h \
  /usr/local/Aria/include/ariaUtil.h /usr/local/Aria/include/ArSocket.h \
- /usr/local/Aria/include/ArMutex.h EmulatePioneer.hh \
+ /usr/local/Aria/include/ArMutex.h EmulatePioneer.h \
  /usr/local/Aria/include/ArTcpConnection.h \
  /usr/local/Aria/include/ArDeviceConnection.h \
  /usr/local/Aria/include/ArSocket.h ClientPacketReceiver.h \
  /usr/local/Aria/include/ArRobotPacketSender.h \
  /usr/local/Aria/include/ArRobotPacket.h
-Config.o: Config.cc Config.hh /usr/local/Aria/include/ArConfig.h \
+Config.o: MobileSimConfig.cpp MobileSimConfig.h /usr/local/Aria/include/ArConfig.h \
  /usr/local/Aria/include/ArConfigArg.h \
  /usr/local/Aria/include/ariaTypedefs.h \
  /usr/local/Aria/include/ariaUtil.h /usr/local/Aria/include/ArLog.h \
@@ -3309,7 +3309,7 @@ Config.o: Config.cc Config.hh /usr/local/Aria/include/ArConfig.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
  /usr/local/Aria/include/ArFileParser.h \
  /usr/local/Aria/include/ArHasFileName.h
-MapLoader.o: MapLoader.cc stage/src/stage.h /usr/include/glib-2.0/glib.h \
+MapLoader.o: MapLoader.cpp stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
  /usr/include/glib-2.0/glib/gmacros.h \
@@ -3820,7 +3820,7 @@ MapLoader.o: MapLoader.cc stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/include/gtk-2.0/gtk/gtkoptionmenu.h \
  /usr/include/gtk-2.0/gtk/gtkpreview.h \
  /usr/include/gtk-2.0/gtk/gtktipsquery.h stage/src/blinker.h \
- stage/src/config.h stage/replace/replace.h MapLoader.hh \
+ stage/src/config.h stage/replace/replace.h MapLoader.h \
  /usr/local/Aria/include/ArFunctor.h \
  /usr/local/Aria/include/ariaTypedefs.h \
  /usr/local/Aria/include/ariaOSDef.h /usr/local/Aria/include/ariaUtil.h \
@@ -3829,7 +3829,7 @@ MapLoader.o: MapLoader.cc stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/local/Aria/include/ArArgumentParser.h \
  /usr/local/Aria/include/ArArgumentBuilder.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
- /usr/local/Aria/include/ArGPSCoords.h RobotInterface.hh MobileSim.hh \
+ /usr/local/Aria/include/ArGPSCoords.h RobotInterface.h MobileSim.h \
  /usr/local/Aria/include/ArRobotPacket.h \
  /usr/local/Aria/include/ArBasePacket.h \
  /usr/local/Aria/include/ariaUtil.h /usr/local/Aria/include/ArMap.h \
@@ -3851,16 +3851,16 @@ ClientPacketReceiver.o: ClientPacketReceiver.cpp \
  /usr/local/Aria/include/ArArgumentBuilder.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
  /usr/local/Aria/include/ArSocket.h
-Socket.o: Socket.cc MobileSim.hh /usr/local/Aria/include/ariaUtil.h \
+Socket.o: Socket.cpp MobileSim.h /usr/local/Aria/include/ariaUtil.h \
  /usr/local/Aria/include/ariaTypedefs.h /usr/local/Aria/include/ArLog.h \
  /usr/local/Aria/include/ArMutex.h /usr/local/Aria/include/ArFunctor.h \
  /usr/local/Aria/include/ariaOSDef.h \
  /usr/local/Aria/include/ArArgumentParser.h \
  /usr/local/Aria/include/ArArgumentBuilder.h \
  /usr/local/Aria/include/ArASyncTask.h /usr/local/Aria/include/ArThread.h \
- Socket.hh /usr/local/Aria/include/ArSocket.h \
+ Socket.h /usr/local/Aria/include/ArSocket.h \
  /usr/local/Aria/include/ariaUtil.h /usr/local/Aria/include/ArFunctor.h
-ListeningSocket.o: ListeningSocket.cc ListeningSocket.hh \
+ListeningSocket.o: ListeningSocket.cpp ListeningSocket.h \
  /usr/local/Aria/include/ArASyncTask.h \
  /usr/local/Aria/include/ariaTypedefs.h \
  /usr/local/Aria/include/ArFunctor.h /usr/local/Aria/include/ariaOSDef.h \
@@ -3869,9 +3869,9 @@ ListeningSocket.o: ListeningSocket.cc ListeningSocket.hh \
  /usr/local/Aria/include/ariaUtil.h \
  /usr/local/Aria/include/ArArgumentParser.h \
  /usr/local/Aria/include/ArArgumentBuilder.h \
- /usr/local/Aria/include/ArASyncTask.h MobileSim.hh \
- /usr/local/Aria/include/ariaUtil.h RobotFactory.hh RobotInterface.hh \
- MapLoader.hh stage/src/stage.h /usr/include/glib-2.0/glib.h \
+ /usr/local/Aria/include/ArASyncTask.h MobileSim.h \
+ /usr/local/Aria/include/ariaUtil.h RobotFactory.h RobotInterface.h \
+ MapLoader.h stage/src/stage.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
  /usr/include/glib-2.0/glib/gmacros.h \

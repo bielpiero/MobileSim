@@ -40,7 +40,7 @@
 # using the $(host) Make variable.  If $(host) is MINGW32 or MINGW64, it is reset to MINGW, and
 # both platforms are treated the same.  (However only 32-bit MinGW install is really supported.)
 #
-# If MobileSim source code is detected (namely main.cc), then a rule for MobileSim depending
+# If MobileSim source code is detected (namely main.cpp), then a rule for MobileSim depending
 # on MobileSim, libstage and libAria being built/rebuilt if neccesary is included, otherwise
 # there is no rule for "MobileSim" (used in any distribution package that includes prebuilt
 # binaries and uses this Makefile for installation, but omits source code.)
@@ -120,7 +120,7 @@ SOURCE_DISTRIBUTED_FILES=$(COMMON_DISTRIBUTED_FILES) main.cpp README.src.txt \
   stage/Makefile.am stage/AUTHORS stage/COPYING stage/ChangeLog stage/README \
   stage/README-Windows.txt stage/aclocal.m4 stage/doxygen.conf.in stage/INSTALL \
   stage/NEWS stage/autoconf-mingw.sh stage/stage.pc.in stage/replace/*.c \
-  stage/replace/*.h convertBitmapToArMap.cc util.h \
+  stage/replace/*.h convertBitmapToArMap.cpp util.h \
   stage/gtk-win/* stage/gtk-win/*/* stage/gtk-win/*/*/* stage/gtk-win/*/*/*/* \
   $(ICONSET) MobileSim.app/Info.plist
 SOURCE_DISTRIBUTED_FILES_EXEC=stage/configure stage/config.guess stage/config.sub\
@@ -389,7 +389,7 @@ debug:  MobileSim_debug$(binary_suffix)
 
 # Make sure main.o gets rebuilt if dist/version.num changes, unless its missing (e.g. in source distribution package)
 ifneq ($(VERSION_NUM_FILE),)
-main.o: main.cc $(VERSION_NUM_FILE)
+main.o: main.cpp $(VERSION_NUM_FILE)
 	$(CXX) -c $(MSIM_CFLAGS) -o $@ $<
 endif
 
@@ -414,7 +414,7 @@ cleanDep: clean-dep
 clean-dep:
 	-rm Makefile.dep
 
-ifeq (main.cc,$(wildcard main.cc))
+ifeq (main.cpp,$(wildcard main.cpp))
 
 # We have source code, depend on it being built
 # could depend on $(STAGELIBS) instead of just libstage.a to get both libs, but that can cause make to try
@@ -476,16 +476,16 @@ rezMobileSim: MobileSim
 $(ARIA)/lib/libAria.a: FORCE
 	$(MAKE) -C $(ARIA) lib/libAria.a
 
-#test_mainloop: test_mainloop.cc $(ARIA_OBJS)
+#test_mainloop: test_mainloop.cpp $(ARIA_OBJS)
 #	$(CXX) $(MSIM_CFLAGS) $(MSIM_LFLAGS) -O2 -o $@ $< $(ARIA_OBJS) $(SYSTEM_LINK) && strip $@
 #
-#test_sleep_time: test_sleep_time.cc $(ARIA_OBJS)
+#test_sleep_time: test_sleep_time.cpp $(ARIA_OBJS)
 #	$(CXX) $(MSIM_CFLAGS) $(MSIM_LFLAGS) -O2 -o $@ $< $(ARIA_OBJS) $(SYSTEM_LINK) && strip $@
 
-test_mainloop: test_mainloop.cc $(LIBARIA)
+test_mainloop: test_mainloop.cpp $(LIBARIA)
 	$(CXX) $(MSIM_CFLAGS) $(MSIM_LFLAGS) -O2 -o $@ $< $(ARIA_LINK) $(SYSTEM_LINK) && strip $@
 
-test_sleep_time: test_sleep_time.cc $(LIBARIA)
+test_sleep_time: test_sleep_time.cpp $(LIBARIA)
 	$(CXX) $(MSIM_CFLAGS) $(MSIM_LFLAGS) -O2 -o $@ $< $(ARIA_LINK) $(SYSTEM_LINK) && strip $@
 
 
@@ -533,7 +533,7 @@ stageconf: $(STAGEDIR)/config.status
 #	false
 
 
-convertBitmapToArMap: convertBitmapToArMap.cc $(LIBARIA)
+convertBitmapToArMap: convertBitmapToArMap.cpp $(LIBARIA)
 	$(CXX) $(CFLAGS) $(ARIA_CFLAGS) -o $@ $< $(ARIA_LINK) $(LIBNETPBM) $(SYSTEM_LINK) -lpthread
 
 

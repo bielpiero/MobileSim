@@ -37,8 +37,8 @@
 #include <math.h>
 #include <assert.h>
 #include "stage.h"
-#include "MapLoader.hh"
-#include "RobotInterface.hh"
+#include "MapLoader.h"
+#include "RobotInterface.h"
 #include "ArMap.h"
 #include "ariaUtil.h"
 
