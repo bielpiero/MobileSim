@@ -20,14 +20,14 @@
  *
  */
 
-#include "MobileSim.hh"
+#include "MobileSim.h"
 #include "stage.h"
 #include <signal.h>
 #include <unistd.h>
 
-#include "RobotFactory.hh"
-#include "EmulatePioneer.hh"
-#include "RobotInterface.hh"
+#include "RobotFactory.h"
+#include "EmulatePioneer.h"
+#include "RobotInterface.h"
 
 void mobilesim_crash_handler(int signum)
 {
@@ -78,7 +78,7 @@ void mobilesim_crash_handler(int signum)
               stg_print_error("MobileSim: Couldn't find gdbhelper in current directory or as /usr/local/MobileSim/gdbhelper, can't save debugging information.");
           }
       }
-      if(gdbhelper != NULL && progname != NULL) { 
+      if(gdbhelper != NULL && progname != NULL) {
           char cmd[4096];
           snprintf(cmd, 4096, "gdb -batch -x %s %s %d %s%s", gdbhelper, progname, getpid(), (options.log_file==NULL)?"":">>", (options.log_file==NULL)?"":options.log_file);
           stg_print_error("MobileSim: Running gdb to get debugging information: %s", cmd);
@@ -198,7 +198,7 @@ int mobilesim_rotate_log_files(const char *suffix)
       return 0;
     }
 
-    printf("(rotating log files... cwd is %s)\n", cwdbuf);  // helpful because 'mv -v' will print out mysterious messages 
+    printf("(rotating log files... cwd is %s)\n", cwdbuf);  // helpful because 'mv -v' will print out mysterious messages
     for(int i = 4; i >= 1; --i)
     {
       snprintf(oldfile, MAX_PATH_LEN, "%s-%d", options.log_file, i);
@@ -245,7 +245,7 @@ int mobilesim_rotate_log_files(const char *suffix)
       stg_print_error("MobileSim: Error opening new log file %s after rotating log files!", options.log_file);
       return 0;
     }
-    
+
 
     return 1;
 }

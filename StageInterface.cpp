@@ -30,8 +30,8 @@
 #endif
 
 
-#include "StageInterface.hh"
-#include "EmulatePioneer.hh"
+#include "StageInterface.h"
+#include "EmulatePioneer.h"
 
 #include "ariaUtil.h"
 #include <map>
@@ -140,7 +140,7 @@ void StageInterface::connect(RobotParams* params)
     positionModel = stg_world_model_name_lookup(stageWorld, robotName.c_str());
     //print_debug("found position model for \"%s\": %p", robotName.c_str(), positionModel);
   }
-  if(!positionModel) 
+  if(!positionModel)
   {
     error("could not find a base robot position model named \"%s\" in the world", robotName.c_str());
     shutdown(-10);
@@ -162,14 +162,14 @@ void StageInterface::connect(RobotParams* params)
   if(s != NULL)
     strncpy(params->RobotClass, s, ROBOT_IDENTIFIER_LEN);
 
-  // Get other models that are children of the position: 
+  // Get other models that are children of the position:
 
   //if(stg_world_gui_enabled(stageWorld)) {
   //  messagesModel = stg_model_find_first_child_with_type(positionModel, (char*) "messages");
   //}
 
   sonarModel = stg_model_find_first_child_with_type(positionModel, (char*) "ranger");
-  if(!sonarModel && !stg_world_get_quiet(stageWorld)) 
+  if(!sonarModel && !stg_world_get_quiet(stageWorld))
   {
     warn_s("No sonar model defined for this robot");
   }
@@ -246,12 +246,12 @@ void StageInterface::connect(RobotParams* params)
 
   i = (int*)stg_model_get_property_fixed(positionModel, "pioneer_batterytype", sizeof(int));
   if(!i) i = (int*)stg_model_get_property_fixed(positionModel, "pioneer_battery_type", sizeof(int));
-  if(i) 
+  if(i)
   {
     log("Read battery type %d from model definition", *i);
     params->BatteryType = *i;
   }
-  else 
+  else
   {
     params->BatteryType = 0;
   }
@@ -268,7 +268,7 @@ puts("StageInterface: now set up and ready to use with the following stage model
 stg_model_print_children(positionModel);
 */
 
-} 
+}
 
 
 void StageInterface::disconnect()
@@ -289,14 +289,14 @@ void StageInterface::disconnect()
 
 
 
-void StageInterface::enableMotors(bool e) 
+void StageInterface::enableMotors(bool e)
 {
   motorsEnabled = e;
   if(!e) stop();
 }
 
 
-void StageInterface::transVel(int v) 
+void StageInterface::transVel(int v)
 {
   if(!motorsEnabled) return;
   // TODO get property pointer and modify rather than copying new struct in
@@ -456,7 +456,7 @@ void StageInterface::setLatDecel(int d)
   stg_model_property_changed(positionModel, "position_speed_config");
 }
 
-void StageInterface::setMaxVel(int v) 
+void StageInterface::setMaxVel(int v)
 {
   stg_position_speed_config_t* speed_cfg = (stg_position_speed_config_t*)stg_model_get_property_fixed(positionModel, "position_speed_config", sizeof(stg_position_speed_config_t));
   speed_cfg->max_speed.x = (v/1000.0);
@@ -580,7 +580,7 @@ int StageInterface::xpos() {
 int StageInterface::ypos() {
   int y;
   stg_position_data_t* data = stagePositionData();
-  if (data) 
+  if (data)
     y = (int) ArMath::roundInt(data->pose.y * 1000.0);
   else
     y = 0;
@@ -613,7 +613,7 @@ int StageInterface::yspeed() {
   int y;
   if(data)
     y = (int) ArMath::roundInt(data->y * 1000.0);
-  else 
+  else
     y = 0;
   return y;
 }
@@ -661,7 +661,7 @@ int StageInterface::getSonarReading(int i) {
   stg_ranger_sample_t* data = (stg_ranger_sample_t*)stg_model_get_property(sonarModel, "ranger_data", &len);
   int numSonarReadings = len / sizeof(stg_ranger_sample_t);
   assert(i <= numSonarReadings && i >= 0);
-  int r =(int) ArMath::roundInt(data[i].range * 1000.0); 
+  int r =(int) ArMath::roundInt(data[i].range * 1000.0);
   return  r;
 }
 
@@ -809,7 +809,7 @@ void StageInterface::closeLaser(size_t i) {
 }
 
 char StageInterface::gripperState() {
-  // TODO 
+  // TODO
   return 0;
 }
 
@@ -953,7 +953,7 @@ int StageInterface::getSimulatorPoseTheta() {
   return th;
 }
 
-int StageInterface::getLastInterval() { 
+int StageInterface::getLastInterval() {
   int i = stg_world_get_last_interval(stageWorld);
   return i;
 }
@@ -973,7 +973,7 @@ void StageInterface::error_s(const char* message)
   stg_world_display_message_s(stageWorld, 0, robotName.c_str(), STG_MSG_CRITICAL, message);
 
   //if(messagesModel) stg_model_lock(messagesModel);
-  /*stg_message_t* msg =*/ 
+  /*stg_message_t* msg =*/
   //stg_messages_send(messagesModel, (char*) robotName.c_str(), STG_MSG_CRITICAL, message);
   // can't call this from any old thread //   if(msg) while(!msg->displayed) stg_world_update(stageWorld, FALSE);
   //if(messagesModel) stg_model_unlock(messagesModel);
@@ -984,7 +984,7 @@ void StageInterface::warn_s(const char* message)
   stg_world_display_message_s(stageWorld, 0, robotName.c_str(), STG_MSG_WARNING, message);
 
   //if(messagesModel) stg_model_lock(messagesModel);
-  //stg_message_t* msg = 
+  //stg_message_t* msg =
   //stg_messages_send(messagesModel, robotName.c_str(), STG_MSG_WARNING, message);
   // can't call this from any old thread // if(msg) while(!msg->displayed) stg_world_update(stageWorld, FALSE);
   //if(messagesModel) stg_model_unlock(messagesModel);
@@ -996,7 +996,7 @@ void StageInterface::inform_s(const char* message)
   stg_world_display_message_s(stageWorld, 0, robotName.c_str(), STG_MSG_INFORMATION, message);
 
   //if(messagesModel) stg_model_lock(messagesModel);
-  //stg_message_t* msg = 
+  //stg_message_t* msg =
   //stg_messages_send(messagesModel, robotName.c_str(), STG_MSG_INFORMATION, message);
   // can't call this from any old thread //  if(msg) while(!msg->displayed) stg_world_update(stageWorld, FALSE);
   //if(messagesModel) stg_model_unlock(messagesModel);
@@ -1046,7 +1046,7 @@ void StageInterface::logState()
 
   stg_world_log_stats(stageWorld);
 
-  log("%lu zero-interval warnings so far, %lu 10%%-too-long warnings.", 
+  log("%lu zero-interval warnings so far, %lu 10%%-too-long warnings.",
     (unsigned long) stg_world_num_zero_interval_warnings(stageWorld),
     (unsigned long) stg_world_num_interval_too_long_warnings(stageWorld)
   );

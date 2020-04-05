@@ -1,4 +1,4 @@
-/*  
+/*
     (C) Copyright 2005, ActivMedia Robotics LLC <http://www.activmedia.com>
     (C) Copyright 2006-2010 MobileRobots, Inc. <http://www.mobilerobots.com>
     (C) Copyright 2011-2015 Adept MobileRobots <http://www.mobilerobots.com>
@@ -22,16 +22,16 @@
 #include <set>
 #include <errno.h>
 
-#include "RobotFactory.hh"
-#include "RobotInterface.hh"
-#include "EmulatePioneer.hh"
+#include "RobotFactory.h"
+#include "RobotInterface.h"
+#include "EmulatePioneer.h"
 
-#include "MobileSim.hh"
-#include "Socket.hh"
+#include "MobileSim.h"
+#include "Socket.h"
 
 #include "ArASyncTask.h"
 
-#include "ListeningSocket.hh"
+#include "ListeningSocket.h"
 
 ArMutex RobotFactory::myClientSocketsMutex;
 
@@ -92,7 +92,7 @@ ArSocket* RobotFactory::open(int port, const char *listenAddress)
     print_debug("RobotFactory socket callback functor is 0x%x", &acceptClientCB);
     return &myListenSocket;
   }
-  else  
+  else
   {
     fprintf(stderr, "Error %d opening socket on port %d for robot factory: %s\n", myListenSocket.getError(), port, myListenSocket.getErrorStr().c_str());
     log("RobotFactory: error opening socket:");
@@ -154,7 +154,7 @@ void RobotFactory::acceptNewClient(unsigned int /*maxTime*/)
   //ep->setSRISimCompat(mySRISimCompat, mySRISimLaserCompat);
   //ep->setLogPacketsReceived(myLogPacketsReceived);
   //ep->setWarnUnsupportedCommands(myWarnUnsupportedCommands);
-} 
+}
 
 void RobotFactory::acceptNewClientFromListenerThread(ArSocket *clientSocket, unsigned int maxTime/*=0*/)
 {

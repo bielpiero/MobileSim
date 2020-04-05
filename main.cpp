@@ -1,4 +1,4 @@
-/*  
+/*
  *  Copyright (C) 2005 ActivMedia Robotics
  *  Copyright (C) 2006-2010 MobileRobots Inc.
  *  Copyright (C) 2011-2015 Adept Technology
@@ -20,7 +20,7 @@
  *
  */
 
-#define _BSD_SOURCE 1	// to get getcwd() from Linux's <unistd.h> 
+#define _BSD_SOURCE 1	// to get getcwd() from Linux's <unistd.h>
 
 #include <stage.h>
 
@@ -52,16 +52,16 @@
 #include "ArMap.h"
 #include "ArSocket.h"
 
-#include "MobileSim.hh"
-#include "Config.hh"
+#include "MobileSim.h"
+#include "MobileSimConfig.h"
 #include "util.h"
-#include "StageInterface.hh"
-#include "EmulatePioneer.hh"
-#include "RobotFactory.hh"
-#include "StageRobotFactory.hh"
-#include "MapLoader.hh"
-#include "Socket.hh"
-#include "NetworkDiscovery.hh"
+#include "StageInterface.h"
+#include "EmulatePioneer.h"
+#include "RobotFactory.h"
+#include "StageRobotFactory.h"
+#include "MapLoader.h"
+#include "Socket.h"
+#include "NetworkDiscovery.h"
 
 
 using namespace MobileSim;
@@ -78,7 +78,7 @@ using namespace MobileSim;
 //#define DELETE_EMULATORS 1
 
 // if defined, delete all robot interface objects on program exit.
-// usually not really neccesary since the program is exiting anyway, 
+// usually not really neccesary since the program is exiting anyway,
 // and is not fully debugged (it can crash)
 //#define DELETE_ROBOT_INTERFACES 1
 
@@ -94,13 +94,13 @@ using namespace MobileSim;
 /* Arbitrary limit for number of robots allowed in the initial
  * configuration dialog.  Theoretically, we're only limited by
  * the number of TCP ports possible (1024 through 65545).
- * MobileSim will probably become more and more unusable, however, 
+ * MobileSim will probably become more and more unusable, however,
  * the closer you approach this limit.
  */
 #define ROBOTS_MENU_LIMIT 200
 
-/* If undefined, temp files won't be deleted. Useful 
-   for debugging them. 
+/* If undefined, temp files won't be deleted. Useful
+   for debugging them.
    */
 #define CLEANUP_TEMP_FILES 1
 
@@ -123,7 +123,7 @@ using namespace MobileSim;
 #define MOBILESIM_DEFAULT_HELP_URL "file:///usr/local/MobileSim/README.html" // TODO this should be inside MobileSim.app bundle directory
 #else
 #define MOBILESIM_DEFAULT_DIR "/usr/local/MobileSim"
-#define MOBILESIM_DEFAULT_HELP_URL "file:///usr/local/MobileSim/README.html" 
+#define MOBILESIM_DEFAULT_HELP_URL "file:///usr/local/MobileSim/README.html"
 #endif
 
 #endif
@@ -134,23 +134,23 @@ char TempWorldFile[MAX_PATH_LEN];
 
 /* Some predefined ActivMedia robot models for use in the GUI */
 const char* CommonRobotModels[] = {
-  "p3dx-sh-lms1xx", 
+  "p3dx-sh-lms1xx",
   "p3dx-sh-lms200",
-  "p3dx-sh", 
-  "p3at-sh-lms1xx", 
-  "p3at-sh-lms200", 
-  "p3at-sh", 
+  "p3dx-sh",
+  "p3at-sh-lms1xx",
+  "p3at-sh-lms200",
+  "p3at-sh",
   "amigo-sh",
   "amigo-sh-tim3xx",
-  "powerbot-sh", 
-  "peoplebot-sh", 
-  "seekur", 
-  "seekurjr", 
+  "powerbot-sh",
+  "peoplebot-sh",
+  "seekur",
+  "seekurjr",
   "pioneer-lx",
-  "research-patrolbot", 
-  "p2de", 
-  "p2at", 
-  "p3atiw-sh", 
+  "research-patrolbot",
+  "p2de",
+  "p2at",
+  "p3atiw-sh",
   "p3dx-no-error",
   "p3dx-big-rot-error",
   "p3dx-big-x-error",
@@ -175,12 +175,12 @@ ArMap *map = NULL;
 unsigned long MobileSim::log_stats_freq = 0;
 
 /* Create a temporary world file and load it. Return NULL on error */
-stg_world_t* create_stage_world(const char* mapfile, 
-  /*std::map<std::string, std::string>& robotInstanceRequests, std::list<std::string>& robotFactoryRequests,*/ 
-    const char* libdir, 
-    //mobilesim_start_place_t start, 
-    //double start_override_x, double start_override_y, double start_override_th, 
-    double world_res = 0.0,  
+stg_world_t* create_stage_world(const char* mapfile,
+  /*std::map<std::string, std::string>& robotInstanceRequests, std::list<std::string>& robotFactoryRequests,*/
+    const char* libdir,
+    //mobilesim_start_place_t start,
+    //double start_override_x, double start_override_y, double start_override_th,
+    double world_res = 0.0,
     void (*loop_callback)() = NULL);
 
 /* Return a name for a robot defined in a pfile that is usable in stage etc.
@@ -190,7 +190,7 @@ const char *pfile_model_name(const char *pfile)
 {
     /* Skip past any directories */
     const char *modelname = strrchr(pfile, '/');
-    if(modelname) 
+    if(modelname)
     {
       if(modelname[0] == '/') ++modelname;
     }
@@ -553,16 +553,16 @@ MobileSim::Options options;
 
 void do_gtk_iteration()
 {
-  if(!options.NonInteractive) 
+  if(!options.NonInteractive)
     gtk_main_iteration_do(FALSE);
 }
 
-int main(int argc, char** argv) 
+int main(int argc, char** argv)
 {
 
   MobileSim::Options& opt = options; // shortcut
 
-  // save command-line arguments 
+  // save command-line arguments
   opt.argc = argc;
   opt.argv = argv;
 
@@ -630,7 +630,7 @@ int main(int argc, char** argv)
         usage();
         exit(ERR_USAGE);
       }
-    } 
+    }
     else if(command_argument_match(argv[i], "R", "robot-factory")) {
       if(++i < argc) {
         stg_print_msg("MobileSim: Will create robot factory for model \"%s\".", argv[i]);
@@ -665,13 +665,13 @@ int main(int argc, char** argv)
     }
 #endif
 #ifndef MOBILESIM_NOGUI
-    else if(command_argument_match(argv[i], "", "no-graphics") || 
+    else if(command_argument_match(argv[i], "", "no-graphics") ||
             command_argument_match(argv[i], "", "nographics") ||
             command_argument_match(argv[i], "", "disable-graphics"))
     {
       opt.graphicsmode = opt.NO_GRAPHICS;
     }
-    else if(command_argument_match(argv[i], "", "no-gui") || 
+    else if(command_argument_match(argv[i], "", "no-gui") ||
             command_argument_match(argv[i], "", "nogui") ||
             command_argument_match(argv[i], "", "disable-gui"))
     {
@@ -688,7 +688,7 @@ int main(int argc, char** argv)
       opt.log_html = true;
       stg_set_print_format(STG_PRINT_HTML);
     }
-    else if(!strcasecmp(argv[i], "--cwd") || !strcasecmp(argv[i], "-cwd") || !strcasecmp(argv[i], "--cd") || !strcasecmp(argv[i], "-cd") ) 
+    else if(!strcasecmp(argv[i], "--cwd") || !strcasecmp(argv[i], "-cwd") || !strcasecmp(argv[i], "--cd") || !strcasecmp(argv[i], "-cd") )
     {
       if(++i < argc)
       {
@@ -912,14 +912,14 @@ int main(int argc, char** argv)
         }
         else if(strcasecmp(argv[i], "random_each_update") == 0)
         {
-          opt.odom_error_mode = MobileSim::Options::RANDOM_EACH_UPDATE; 
+          opt.odom_error_mode = MobileSim::Options::RANDOM_EACH_UPDATE;
         }
         else if(strcasecmp(argv[i], "constant") == 0)
         {
           opt.odom_error_mode = MobileSim::Options::CONSTANT;
         }
         else if(strcasecmp(argv[i], "none") == 0)
-        { 
+        {
           opt.odom_error_mode = MobileSim::Options::NONE;
         }
         else
@@ -1031,7 +1031,7 @@ int main(int argc, char** argv)
     stg_use_error_dialog = FALSE;
   }
 
-  switch(opt.odom_error_mode) 
+  switch(opt.odom_error_mode)
   {
     case MobileSim::Options::RANDOM_INIT:
       stg_position_force_odom_error_mode_all_models(STG_POSITION_ODOM_ERROR_RANDOM_INIT);
@@ -1053,7 +1053,7 @@ int main(int argc, char** argv)
     stg_print_warning("MobileSim crashed and was automatically restarted.  See log files (-crash) for diagnostic information.");
 
 #ifndef WIN32
-  // ignore this signal, instead let write() return an error 
+  // ignore this signal, instead let write() return an error
   signal(SIGPIPE, SIG_IGN);
 
   if(opt.EnableCrashDebug || opt.EnableCrashRestart)
@@ -1103,7 +1103,7 @@ int main(int argc, char** argv)
 
 
   /* Change to startup directory before dialog box, so that it shows the startup
-   * dir. 
+   * dir.
    */
   if(opt.change_to_directory)
   {
@@ -1147,16 +1147,16 @@ int main(int argc, char** argv)
       opt.nomap = true;
 
   }
-  
-  
- 
+
+
+
   // Show an initializing/loading dialog
   GtkWidget *busydialog = NULL;
   if(!opt.NonInteractive)
   {
-    busydialog = busy_loading_dialog(); 
+    busydialog = busy_loading_dialog();
     assert(busydialog);
-  
+
     // main loop is not running yet, so do a few iterations to make sure the dialog contents are shown:
     for(int i = 0; i < 10; ++i)
       gtk_main_iteration_do(FALSE);
@@ -1164,7 +1164,7 @@ int main(int argc, char** argv)
 
   /* Setup our special pioneer-specific properties for the world file. These
    * will be read from the model definitions by
-   * emulatePioneer/stageInterface.cc. 
+   * emulatePioneer/stageInterface.cc.
    * TODO move to StageInterface.cc.
    */
   stg_model_user_property("position", "pioneer_robot_subtype", STG_STRING);
@@ -1205,10 +1205,10 @@ int main(int argc, char** argv)
 
   /* Convert Aria map to Stage world, and load it. TODO don't create robot
      * modelste there.  */
-  world = create_stage_world(opt.map.c_str(), 
+  world = create_stage_world(opt.map.c_str(),
     //robotInstanceRequests, robotFactoryRequests,
-    libdir, 
-    //mobilesim_startplace, opt.start_pos_override_pose_x, opt.start_pos_override_pose_y, opt.start_pos_override_pose_th, 
+    libdir,
+    //mobilesim_startplace, opt.start_pos_override_pose_x, opt.start_pos_override_pose_y, opt.start_pos_override_pose_th,
     opt.world_res/1000.0, &do_gtk_iteration);
 
 
@@ -1224,7 +1224,7 @@ int main(int argc, char** argv)
   mapLoader.setMapLoadChunkSizes(opt.mapLoadLinesPerChunk, opt.mapLoadPointsPerChunk);
 
 
-  // load map 
+  // load map
   if(opt.map != "")
   {
     mapLoader.newMap(opt.map, NULL, NULL);
@@ -1233,7 +1233,7 @@ int main(int argc, char** argv)
   // save list of map files for use in startup GUI.
   //config.updateRecentMaps(map);
 
-  
+
 
   // add callback for loading a new map file from GUI menus
   stg_world_add_file_loader(world, &stage_load_file_cb, "*.map", "MobileRobots/ActivMedia Map Files", &mapLoader);
@@ -1314,7 +1314,7 @@ int main(int argc, char** argv)
     const char *modelname = pfile_model_name((*i).c_str());
     stg_print_msg("MobileSim: Creating new robot factory for \"%s\"...", modelname);
     RobotFactory *stagefac;
-    if(mobilesim_startplace == mobilesim_start_fixedpos) 
+    if(mobilesim_startplace == mobilesim_start_fixedpos)
       stagefac = new StageRobotFactory(world, modelname, opt.start_pos_override_pose_x, opt.start_pos_override_pose_y, opt.start_pos_override_pose_th, &opt);
     else
       stagefac = new StageRobotFactory(world, modelname, &mobilesim_get_map_home, &mobilesim_get_map_bounds, (mobilesim_startplace==mobilesim_start_outside), &opt );
@@ -1347,7 +1347,7 @@ int main(int argc, char** argv)
   {
     std::string modelname = (*i).second.c_str();
     std::string robotname = (*i).first.c_str();
-    
+
     if(mobilesim_startplace == mobilesim_start_random)
     {
       startPose.x = STG_RANDOM_RANGE(map_min_x, map_max_x) / 1000.0;
@@ -1369,7 +1369,7 @@ int main(int argc, char** argv)
 
     if(!opt.NonInteractive) gtk_main_iteration_do(FALSE);
   }
-    
+
 
   /* Create Pioneer emulators for each position model.
    * TODO create robot models in stage here too instead of in the world file in create_stage_world. */
@@ -1380,12 +1380,12 @@ int main(int argc, char** argv)
     const std::string& model = (*i).second;
     //    stg_print_msg("MobileSim: Creating emulated Pioneer connection for robot named \"%s\" (\"%s\") on TCP port %d.", (*i).first.c_str(), (*i).second.c_str(), port);
     //    stg_world_display_message(world, 0, "MobileSim", STG_MSG_INFORMATION, "Creating emulated Pioneer connection for \"%s\" (\"%s\") on TCP port %d.", (*i).second.c_str(), (*i).first.c_str(), port);
-    StageInterface* stageint = new StageInterface(world, model, name); 
+    StageInterface* stageint = new StageInterface(world, model, name);
     EmulatePioneer* emulator = new EmulatePioneer(stageint, model, opt.port++, false, true, &opt);
     if(map)
 	    emulator->loadMapObjects(map);
     robotInterfaces.insert(stageint);
-    //emulators.insert(emulator);  
+    //emulators.insert(emulator);
     emulator->setSimulatorIdentification("MobileSim", MOBILESIM_VERSION);
     //emulator->setCommandsToIgnore(opt.ignore_commands);
     //emulator->setVerbose(opt.verbose);
@@ -1403,7 +1403,7 @@ int main(int argc, char** argv)
 
   /* Change Stage's window title. TODO: include map file name? */
   stg_world_set_window_title(world, "MobileSim");
-  
+
   if(!opt.NonInteractive)
     gtk_main_iteration_do(FALSE);
 
@@ -1443,7 +1443,7 @@ int main(int argc, char** argv)
   }
 #endif
 
-  /* run network autodiscovery responder thread */ 
+  /* run network autodiscovery responder thread */
   NetworkDiscoveryResponder discovery;
   if(opt.run_network_discovery)
   {
@@ -1462,31 +1462,31 @@ int main(int argc, char** argv)
 
   if(!opt.NonInteractive)
     stg_world_set_cursor_normal(world);
-  
+
   if(busydialog)
   {
     gtk_widget_hide(busydialog);
     gtk_widget_destroy(busydialog);
   }
-  
+
   int stageStat = 0;
 
 
   /* Main loop
 
      Stage updates and client output are time sensitive and must be done as
-     close to the desired intervals as possible.  We decide which has to 
-     be done first and sleep for that time, do it, then reset its 
+     close to the desired intervals as possible.  We decide which has to
+     be done first and sleep for that time, do it, then reset its
      next scheduled time.  If during this loop we have some time available
      and it hasn't been too long, we also do non-time-critical tasks
      such as check for client and factory input, and work on loading
      a new map.
-  
+
      see test_mainloop.cc for a test that looks at this loop strategy only,
      with dummy sleeps for the tasks.
 
      @todo Right now we assume that all clients want output at 100ms, but
-     the real robot can be configured to use any SIP frequency; generalize 
+     the real robot can be configured to use any SIP frequency; generalize
      this runloop to a priority queue containing the stage update
      task plus each group of clients that has a distinct SIPFreq set.
   */
@@ -1533,7 +1533,7 @@ int main(int argc, char** argv)
       if(lastStageUpdate.mSecSince() > stageUpdateWarningTime)
         print_warning("Took >%ld ms since last stage simulation update (%ld, interval is %ld)", stageUpdateWarningTime, lastStageUpdate.mSecSince(), stageUpdateFreq);
       lastStageUpdate.setToNow();
-      stageUpdateDue.setToNow(); 
+      stageUpdateDue.setToNow();
       stageUpdateDue.addMSec(stageUpdateFreq);
       stageStat = stg_world_update(world, FALSE /*sleepflag*/, FALSE /*skiptooson*/ );
     }
@@ -1602,7 +1602,7 @@ int main(int argc, char** argv)
       lastMapProcess.setToNow();
       mapLoader.process(processTimeWindow);
     }
-   
+
     /* Robot Factory */
     if( (stageUpdateDue.mSecTo() > RobotFactoryWindow && clientOutputDue.mSecTo() > RobotFactoryWindow) ||
         lastRobotFactory.mSecSince() > RobotFactoryMaxFreq)
@@ -1741,7 +1741,7 @@ int main(int argc, char** argv)
   {
     if(chdir(opt.before_change_to_directory) != 0)	// this is needed so profiling info can be written to expected directory
     {
-      print_warning("MobileSim: Error returning to previous current directory \"%s\"", opt.before_change_to_directory); 
+      print_warning("MobileSim: Error returning to previous current directory \"%s\"", opt.before_change_to_directory);
     }
   }
 
@@ -1767,10 +1767,10 @@ void mobilesim_get_map_home(double *home_x, double *home_y, double *home_th)
   {
 
     if(home_x) {
-      if(map_min_x == 0 && map_max_x == 0) 
+      if(map_min_x == 0 && map_max_x == 0)
         *home_x = map_home_x = STG_RANDOM_RANGE(-25000, 25000);
       else
-        *home_x = map_home_x = STG_RANDOM_RANGE(map_min_x, map_max_x); 
+        *home_x = map_home_x = STG_RANDOM_RANGE(map_min_x, map_max_x);
     }
     if(home_y) {
       if(map_min_y == 0 && map_max_y == 0)
@@ -1805,7 +1805,7 @@ void mobilesim_set_map_home(double home_x, double home_y, double home_th)
   map_home_th = home_th;
 }
 
-/* Create a temporary world file and load it: 
+/* Create a temporary world file and load it:
    If map is null or empty, will make an empty world of some size with
    the robot in the middle, else will convert an aria map by that
    name and include it in the world.
@@ -1814,12 +1814,12 @@ void mobilesim_set_map_home(double home_x, double home_y, double home_th)
    to this list.
    If not null, loop_callback is called several times during the course of creating the world (not at a regular pace, just a chance to do any random updates to UI etc.)
    */
-stg_world_t* create_stage_world(const char* mapfile, 
+stg_world_t* create_stage_world(const char* mapfile,
   /*std::map<std::string, std::string>& robotInstanceRequests, * std::list<std::string>& robotFactoryRequests, */
-  const char* libdir, 
-  //mobilesim_start_place_t startplace, 
-  //double start_override_x, double start_override_y, double start_override_th, 
-  double world_res, 
+  const char* libdir,
+  //mobilesim_start_place_t startplace,
+  //double start_override_x, double start_override_y, double start_override_th,
+  double world_res,
   void (*loop_callback)())
 {
 
@@ -1842,7 +1842,7 @@ stg_world_t* create_stage_world(const char* mapfile,
 
   /* Create stage world file. */
 
-  // XXX TODO don't save it to a file 
+  // XXX TODO don't save it to a file
 
   FILE* world_fp = ArUtil::fopen(worldfile, "w");
   if(!world_fp)
@@ -1856,21 +1856,21 @@ stg_world_t* create_stage_world(const char* mapfile,
     {
       char buf[256];
       snprintf(buf, 255, "Could not write Stage world file \"%s\" (%s).\nIs the system temporary directory \"%s\" accessible?", worldfile, strerror(errno), tempdir);
-      stg_gui_fatal_error_dialog("MobileSim: Error creating temprorary file.", buf, ERR_TEMPFILE, FALSE); 
+      stg_gui_fatal_error_dialog("MobileSim: Error creating temprorary file.", buf, ERR_TEMPFILE, FALSE);
       exit(ERR_TEMPFILE);
     }
   }
 
-  
-  // Change locale to good old C to get decimal points rather than commas 
+
+  // Change locale to good old C to get decimal points rather than commas
   // in floating point numbers (if locale wants them) (stage expects the C locale, and AM map files
-  // use C locale when written).  stg_init is  supposed to do this but I 
+  // use C locale when written).  stg_init is  supposed to do this but I
   // guess something else changed it back.
   if(!setlocale(LC_ALL, "C"))
     stg_print_warning("MobileSim: failed to set locale to \"C\", Stage world files may not parse correctly!");
 
   if(loop_callback) (*loop_callback)();
-	
+
   // Write comment, include model definitions, and GUI spec.
   fprintf(world_fp, "# World file for Stage\n# Automatically generated by MobileSim, the MobileRobots/ActivMedia mobile robot simulator.\n\n");
   fprintf(world_fp, "include \"%s%cPioneerRobotModels.world.inc\"\n", libdir, PATHSEPCH);
@@ -1886,7 +1886,7 @@ stg_world_t* create_stage_world(const char* mapfile,
     //fprintf(world_fp, "world\n(\n\tresolution %f\n)\n\n", world_res);
     fprintf(world_fp, "resolution %f\n\n", world_res);
   }
-  
+
 
   if(loop_callback) (*loop_callback)();
 
@@ -1901,7 +1901,7 @@ stg_world_t* create_stage_world(const char* mapfile,
   t.setToNow();
   DIR* dir = NULL;
   char includedir[MAX_PATH_LEN];
-  if(homedir) 
+  if(homedir)
   {
 	strncpy(includedir, homedir, MAX_PATH_LEN-1);
     strncat(includedir, "/.MobileSim/include", MAX_PATH_LEN-1);
@@ -1909,8 +1909,8 @@ stg_world_t* create_stage_world(const char* mapfile,
     dir = opendir(includedir);
     //printf("%ld ms to call opendir(%s) => 0x%x\n", t.mSecSince(), includedir, dir);
     t.setToNow();
-  } 
-  
+  }
+
   if(dir)
   {
     stg_print_msg("MobileSim: Checking %s for files to include...", includedir);
@@ -1947,7 +1947,7 @@ stg_world_t* create_stage_world(const char* mapfile,
     char msimdir[MAX_PATH_LEN];
     strncpy(msimdir, homedir, MAX_PATH_LEN-1);
     strncat(msimdir, "/.MobileSim", MAX_PATH_LEN-1);
-	if(mkdir(msimdir) == 0) 
+	if(mkdir(msimdir) == 0)
 	{
 		printf("Created %s directory.\n", msimdir);
 		if(mkdir(includedir) == 0)
@@ -1956,10 +1956,10 @@ stg_world_t* create_stage_world(const char* mapfile,
   }
  #endif
 
-  
-  
+
+
   /* Load the ActivMedia map file to get the size, dock/home points, etc. */
-  // TODO use MapLoader object... 
+  // TODO use MapLoader object...
   // objects?
   map = new ArMap();
   if(mapfile && strlen(mapfile) > 0)
@@ -1973,7 +1973,7 @@ stg_world_t* create_stage_world(const char* mapfile,
       else {
         char buf[256];
         snprintf(buf, 256, "Error loading map \"%s\".\n.", mapfile);
-        stg_gui_fatal_error_dialog("MobileSim: Error loading map", buf, ERR_MAPCONV, FALSE); 
+        stg_gui_fatal_error_dialog("MobileSim: Error loading map", buf, ERR_MAPCONV, FALSE);
       }
       return NULL;
     }
@@ -1986,7 +1986,7 @@ stg_world_t* create_stage_world(const char* mapfile,
   }
 
   if(loop_callback) (*loop_callback)();
-  
+
   /* Remember map bounds for future use */
   map_min_x = map->getLineMinPose().getX();
   map_min_y = map->getLineMinPose().getY();
@@ -2059,7 +2059,7 @@ stg_world_t* create_stage_world(const char* mapfile,
   {
     const char* model = (*i).c_str();
     struct stat filestat;
-	
+
 	if(loop_callback) (*loop_callback)();
 
     if(stat( model, &filestat) == -1)
@@ -2077,16 +2077,16 @@ stg_world_t* create_stage_world(const char* mapfile,
     }
     stg_print_msg("MobileSim: Loaded parameter file \"%s\" to define robot model \"%s\".", pfile, model);
   }
-#endif   
-  
+#endif
+
 #if 0 // TODO move to outside the temp file
   /* Create robot models in the world */
   for(RobotModels::const_iterator i = robotInstanceRequests.begin();
-        i != robotInstanceRequests.end(); i++) 
+        i != robotInstanceRequests.end(); i++)
   {
-  
+
     if(loop_callback) (*loop_callback)();
-	
+
     // if the modelname has /, it will cause a syntax error, so find the last
     // one. if the modelname has no /, this procedure should result in an
     // identical string.
@@ -2102,7 +2102,7 @@ stg_world_t* create_stage_world(const char* mapfile,
     robotname = robotname.substr(lastslash);
     // TODO: remove the old entry in the robotInstanceRequests map and add this new one.
     // Can't do it while we're iterating it though...
-    
+
     if(startplace == mobilesim_start_random)
     {
       startPose.x = STG_RANDOM_RANGE(map_min_x, map_max_x) / 1000.0;
@@ -2113,7 +2113,7 @@ stg_world_t* create_stage_world(const char* mapfile,
     fprintf(world_fp, "%s\n(\n"\
                       "\tname \"%s\"\n"\
                       "\tpose [%g %g %g]\n",
-                      modelname.c_str(), robotname.c_str(), 
+                      modelname.c_str(), robotname.c_str(),
                       startPose.x, startPose.y, startPose.a
     );
     fprintf(world_fp, "\tmessages ( )\n");
@@ -2121,7 +2121,7 @@ stg_world_t* create_stage_world(const char* mapfile,
     startPose.y -= 1.0;
   }
 #endif
-  
+
   /* Close the worldfile, then have stage load it */
   fclose(world_fp);
 
@@ -2129,10 +2129,10 @@ stg_world_t* create_stage_world(const char* mapfile,
   strncpy(TempWorldFile, worldfile, 256);
 
   stg_print_msg("MobileSim: Loading stage world file \"%s\"...", worldfile);
-  
+
   if(loop_callback) (*loop_callback)();
-  
-  stg_world_t* world = stg_world_create_from_file(worldfile, options.echo_stage_worldfile, loop_callback); 
+
+  stg_world_t* world = stg_world_create_from_file(worldfile, options.echo_stage_worldfile, loop_callback);
   if(!world)
   {
     if(options.NonInteractive)
@@ -2159,7 +2159,7 @@ stg_world_t* create_stage_world(const char* mapfile,
         strncpy(message, errormsg, maxlen-1);
       }
       cleanup_temp_files();
-      stg_gui_fatal_error_dialog(message, stg_last_error_message, ERR_STAGEINIT, FALSE); 
+      stg_gui_fatal_error_dialog(message, stg_last_error_message, ERR_STAGEINIT, FALSE);
           // this function exits the program when user clicks OK
     }
     return NULL;
@@ -2180,7 +2180,7 @@ stg_world_t* create_stage_world(const char* mapfile,
     }
     stg_print_msg("MobileSim: Finished loading map data from \"%s\".", mapfile);
   }
-  
+
 
   return world;
 }
@@ -2231,20 +2231,20 @@ const char* find_libdir()
       libdir = strdup(buf);
       stg_print_msg("MobileSim: Expecting supporting resources to be installed in \"%s\" (according to ActivMedia Robotics registry key).", libdir);
     }
-    else  
+    else
     {
       libdir = MOBILESIM_DEFAULT_DIR; // "\\Program Files\\MobileRobots\\MobileSim";
       stg_print_msg("MobileSim: Expecting supporting resources to be installed in the default location: \"%s\".", libdir);
     }
 
-#else 
+#else
 
     libdir = MOBILESIM_DEFAULT_DIR; // "/usr/local/MobileSim";
     stg_print_msg("MobileSim: Expecting supporting resources to be installed in the default location: \"%s\".", libdir);
 #endif
 
-  } 
-  else 
+  }
+  else
   {
     stg_print_msg("MobileSim: Expecting supporting resources to be installed in \"%s\" (according to MOBILESIM environment variable).", libdir);
   }
@@ -2279,7 +2279,7 @@ void add_model_to_robot_type_map_if_position(stg_model_t* model, char* name, voi
     else
       type.assign(t, l);
 
-  
+
     map->insert( std::pair< std::string, std::pair<std::string, std::string> >(name, std::pair<std::string, std::string>(type, subtype)) );
   }
 }
@@ -2291,11 +2291,11 @@ const char* worldfile_define_model_from_pfile(FILE* fp, const char* pfile)
 {
   ArRobotParams p;
   char err[256];
-  if(!p.parseFile(pfile, 
+  if(!p.parseFile(pfile,
       false,    // continueOnErrors
       false,    // noFileNotFoundError
       err, 255, // error message buffer
-      NULL      // sectionsToParse 
+      NULL      // sectionsToParse
   ))
   {
     stg_print_error("MobileSim: Error reading or parsing parameter file \"%s\": %s", pfile, err);
@@ -2320,11 +2320,11 @@ const char* worldfile_define_model_from_pfile(FILE* fp, const char* pfile)
   fprintf(fp, "define %s pioneer (\n", modelname);
   fprintf(fp, "\tpioneer_robot_type \"%s\"\n", p.getClassName());
   fprintf(fp, "\tpioneer_robot_subtype \"%s\"\n", p.getSubClassName());
-  
+
   /* Speed profile: */
   if(p.getAbsoluteMaxVelocity() > 0 || p.getAbsoluteMaxRotVelocity() > 0)
     fprintf(fp, "\tmax_speed [%f 0 %f]\n", p.getAbsoluteMaxVelocity()/1000.0, ArMath::degToRad(p.getAbsoluteMaxRotVelocity()));
-  if(p.getTransAccel() > 0 || p.getRotAccel() > 0) 
+  if(p.getTransAccel() > 0 || p.getRotAccel() > 0)
     fprintf(fp, "\taccel [%f 0 %f]\n", p.getTransAccel()/1000.0, ArMath::degToRad(p.getRotAccel()));
   if(p.getTransDecel() > 0 || p.getRotDecel() >0)
     fprintf(fp, "\tdecel [%f 0 %f]\n", p.getTransDecel()/1000.0, ArMath::degToRad(p.getRotDecel()));
@@ -2348,7 +2348,7 @@ const char* worldfile_define_model_from_pfile(FILE* fp, const char* pfile)
   fprintf(fp, "\tpolygon[0].point[7] [%f %f]\n", d, -w/2.0);
   */
 
-  /* TODO: Use LengthFront and LengthRear to find center instead of 
+  /* TODO: Use LengthFront and LengthRear to find center instead of
     Length/2.
      TODO: If present, use Radius instead of Diagonal to fit to elpsoid.
   */
@@ -2360,7 +2360,7 @@ const char* worldfile_define_model_from_pfile(FILE* fp, const char* pfile)
      4  /     |     \ }d   |
        *      y      * 7   |
       _|__-x__|__x___|_   Robot      Front->
-       |      |      |    Width w 
+       |      |      |    Width w
      3 *     -y      * 0   |
         \     |     / }d   |
        2 *----|----* 1     v
@@ -2376,7 +2376,7 @@ const char* worldfile_define_model_from_pfile(FILE* fp, const char* pfile)
   fprintf(fp, "\tpolygon[0].point[5] [%f %f]\n", -(x-d), y);
   fprintf(fp, "\tpolygon[0].point[6] [%f %f]\n", (x-d), y);
   fprintf(fp, "\tpolygon[0].point[7] [%f %f]\n", x, (y-d));
-  
+
 
 
   /* Client conversion factors: */
@@ -2419,7 +2419,7 @@ const char* worldfile_define_model_from_pfile(FILE* fp, const char* pfile)
   }
 
 
-  
+
   /* Done. */
   fprintf(fp, ")\n\n");
   return modelname;
@@ -2463,10 +2463,10 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
 #ifdef USE_GTKFILECHOOSER
 
   dialog = GTK_DIALOG(
-    gtk_file_chooser_dialog_new("MobileSim: Load Map File...", NULL, 
-      GTK_FILE_CHOOSER_ACTION_OPEN, 
-      "No Map", GTK_RESPONSE_CANCEL, 
-      "Load Map", GTK_RESPONSE_ACCEPT, 
+    gtk_file_chooser_dialog_new("MobileSim: Load Map File...", NULL,
+      GTK_FILE_CHOOSER_ACTION_OPEN,
+      "No Map", GTK_RESPONSE_CANCEL,
+      "Load Map", GTK_RESPONSE_ACCEPT,
     NULL)
   );
   filechooser = GTK_FILE_CHOOSER(dialog);
@@ -2509,7 +2509,7 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
   // opt: select model, advanced, etc.:
-  {   
+  {
       /* opt Boxes
        *   0              1              2
        * 0 +--------------+--------------+ 0
@@ -2520,7 +2520,7 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
        *
        * More options Expandable panel:
        *
-       *   Multiple Robots: 
+       *   Multiple Robots:
        *    (o) Create [Num Entry] robot(s), starting at port [Port Entry]
        *    ( ) Create a new robot for each connection to port [Port Entry]
        *
@@ -2542,7 +2542,7 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
     gtk_container_set_border_width(GTK_CONTAINER(optbox), 10);
     gtk_container_add(GTK_CONTAINER(optframe), GTK_WIDGET(optbox));
     gtk_widget_show(GTK_WIDGET(optbox));
-    
+
     //const guint pad = 5;
 
     // Menu to select a robot model to create, unless -r was given:
@@ -2575,11 +2575,11 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
       }
       gtk_combo_box_set_active(modelmenu, 0);
 
-#else   /* (not using newer combobox) */ 
+#else   /* (not using newer combobox) */
 
       modelmenu = GTK_COMBO(gtk_combo_new());
       GList* items = NULL;
-      for(const char** m = CommonRobotModels; *m != 0; m++ ) 
+      for(const char** m = CommonRobotModels; *m != 0; m++ )
       {
         items = g_list_append(items, (gchar*)*m);
       }
@@ -2599,7 +2599,7 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
 
     // - Advanced opt for multirobots:
     //
-    
+
 #ifdef USE_GTKEXPANDER
     GtkContainer *more = GTK_CONTAINER(gtk_expander_new("More options"));
 #else
@@ -2610,7 +2610,7 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
     GtkBox *more_box = GTK_BOX(gtk_vbox_new(FALSE, 0));
     gtk_container_add(more, GTK_WIDGET(more_box));
     gtk_widget_show(GTK_WIDGET(more_box));
-    
+
 
     // Only include num. robot opt if neither -r or -R given
     if(include_modelmenu)
@@ -2663,8 +2663,8 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
 
     gtk_widget_show(GTK_WIDGET(more));
 
-/****** Old table: 
- * 
+/****** Old table:
+ *
  *   0              1              2   3              4              5
  * 0 +--------------+--------------+---+--------------+--------------+ 0
  *   | Num. Robots: | [Num Entry ] |   | Start Port:  | [Port Entry] |
@@ -2695,11 +2695,11 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
         GtkLabel* numlabel = GTK_LABEL(gtk_label_new("Num. Robots:"));
         gtk_widget_show(GTK_WIDGET(numlabel));
         gtk_misc_set_alignment(GTK_MISC(numlabel), 1, 0.5);
-        gtk_table_attach(moretable, GTK_WIDGET(numlabel), 0, 1, 0, 1, GTK_FILL, GTK_FILL, pad, pad); 
+        gtk_table_attach(moretable, GTK_WIDGET(numlabel), 0, 1, 0, 1, GTK_FILL, GTK_FILL, pad, pad);
           // L, R, T, B, xopt, yopt, xpad, ypad
         numentry = GTK_ENTRY(gtk_spin_button_new_with_range(1, ROBOTS_MENU_LIMIT, 1));
         gtk_widget_show(GTK_WIDGET(numentry));
-        gtk_table_attach(moretable, GTK_WIDGET(numentry), 1, 2, 0, 1, GTK_FILL, GTK_FILL, pad, pad); 
+        gtk_table_attach(moretable, GTK_WIDGET(numentry), 1, 2, 0, 1, GTK_FILL, GTK_FILL, pad, pad);
           // L, R, T, B, xopt, yopt, xpad, ypad
       }
 
@@ -2715,7 +2715,7 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
           // L, R, T, B, xopt, yopt, xpad, ypad
         portentry = GTK_ENTRY(gtk_spin_button_new_with_range(1024, 65535, 1)); // 1024..65535 is the allowed range for non-privilaged TCP ports
         gtk_widget_show(GTK_WIDGET(portentry));
-        gtk_table_attach(moretable, GTK_WIDGET(portentry), 4, 5, 0, 1, GTK_FILL, GTK_FILL, pad, pad); 
+        gtk_table_attach(moretable, GTK_WIDGET(portentry), 4, 5, 0, 1, GTK_FILL, GTK_FILL, pad, pad);
           // L, R, T, B, xopt, yopt, xpad, ypad
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(portentry), *port);
       }
@@ -2808,7 +2808,7 @@ int map_options_dialog(std::string& map, RobotModels *robotInstanceRequests, Rob
   // hide file dialog
   gtk_widget_hide(GTK_WIDGET(dialog));
   // TODO: destroy widgets
- 
+
 #ifndef USE_GTKFILECHOOSER
   // go back to previous working directory if we changed for the file dialog
   chdir(prev_dir);
@@ -2848,7 +2848,7 @@ void print_debug(const char *m, ...)
   fflush(stg_output_file);
 }
 
-void print_warning(const char *m, ...) 
+void print_warning(const char *m, ...)
 {
   va_list args;
   va_start(args, m);

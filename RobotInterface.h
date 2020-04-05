@@ -1,4 +1,4 @@
-/* 
+/*
 
   Copyright (C) 2005, ActivMedia Robotics, LLC
   Copyright (C) 2006-2010 MobileRobots, Inc.
@@ -22,11 +22,11 @@
 */
 
 
-#ifndef EP_ROBOT_INTERFACE_HH_
-#define EP_ROBOT_INTERFACE_HH_
+#ifndef EP_ROBOT_INTERFACE_H_
+#define EP_ROBOT_INTERFACE_H_
 
-#include "MobileSim.hh"
-#include "MapLoader.hh"
+#include "MobileSim.h"
+#include "MapLoader.h"
 
 #include <string>
 #include <iostream>
@@ -80,13 +80,13 @@ class RobotInterface : public LogInterface {
     virtual ~RobotInterface() {
       //removeStoredRobotInterface(this);
     }
- 
+
     std::string getRobotName() const { return robotName; }
 
     /** Use the given params struct. The implementation of this function might
      change them based on values read for this robot type from the simulator.
      You should call this before accepting a connection with a client, as this function
-     may connect to the robot/sim and retrieve configuration from the robot/sim 
+     may connect to the robot/sim and retrieve configuration from the robot/sim
      you will need for the client session.
     */
     virtual void connect(RobotParams* params) = 0;
@@ -120,14 +120,14 @@ class RobotInterface : public LogInterface {
     virtual void resetSimulatorPose() = 0;
 
     /// Try to open the sonar
-    virtual void openSonar() { 
+    virtual void openSonar() {
       requestedOpenSonar = true;
     }
 
     /// Close the sonar if open
     virtual void closeSonar() {
       requestedOpenSonar = false;
-    } 
+    }
 
     /** Whether sonar was requested to open with openSonar() (regardless of
      * whether it was successfully opened or not)
@@ -136,7 +136,7 @@ class RobotInterface : public LogInterface {
       return requestedOpenSonar;
     }
 
-    /// Whether sonar is open and (potentially) generating data. 
+    /// Whether sonar is open and (potentially) generating data.
     virtual bool sonarOpen() = 0;
 
     virtual void openLaser(size_t i = 0) = 0;
@@ -260,7 +260,7 @@ class RobotInterface : public LogInterface {
     virtual int getLastInterval() = 0; ///< How much real time the last simulation loop took
     virtual int getSimInterval() = 0; ///< How much simulated time each update loop should take
     virtual int getRealInterval() = 0; ///< How much real time each update loop ought to take (if possible)
-    
+
 
 
     /** Stores identifying information about a device. */
@@ -273,7 +273,7 @@ class RobotInterface : public LogInterface {
       unsigned char status;
     };
 
-    /** Get a list of device names (with index for multiple devices of the same 
+    /** Get a list of device names (with index for multiple devices of the same
         kind). If robot doesn't know about it's devices, an empty list may be
         returned.
     */
@@ -292,7 +292,7 @@ class RobotInterface : public LogInterface {
       bool stall, motorsEnabled;
       getMotionState(x, y, th, tv, rv, stall, motorsEnabled);
       log("Times: last=%d, sim=%d, real=%d", getLastInterval(), getSimInterval(), getRealInterval());
-      log("State config: requestedOpenSonar=%d, sonarOpen=%d, laserOpen=%d, motorsEnabled=%d, stalled=%d", 
+      log("State config: requestedOpenSonar=%d, sonarOpen=%d, laserOpen=%d, motorsEnabled=%d, stalled=%d",
               sonarOpenRequested(), sonarOpen(), laserOpen(), motorsEnabled, stall);
       size_t numlasers = numLasers();
       log(" havePosition=%d, haveGripper=%d, haveFrontSonar=%d, haveRearSonar=%d, haveSonar=%d, numSonarReadings=%d, numLasers=%u",

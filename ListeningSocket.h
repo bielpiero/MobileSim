@@ -1,4 +1,4 @@
-/*  
+/*
     Copyright (C) 2005, ActivMedia Robotics LLC <http://www.activmedia.com>
     Copyright (C) 2006-2010 MobileRobots, Inc. <http://www.mobilerobots.com>
     Copyright (C) 2011-2015 Adept Technology
@@ -20,8 +20,8 @@
 */
 
 
-#ifndef LISTENING_SOCKET_HH_
-#define LISTENING_SOCKET_HH_
+#ifndef LISTENING_SOCKET_H_
+#define LISTENING_SOCKET_H_
 
 #include "ArASyncTask.h"
 #include "ArSocket.h"

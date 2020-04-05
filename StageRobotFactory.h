@@ -1,4 +1,4 @@
-/*  
+/*
     (C) Copyright 2005, ActivMedia Robotics LLC <http://www.activmedia.com>
     (C) Copyright 2006-2010 MobileRobots, Inc. <http://www.mobilerobots.com>
     (C) Copyright 2011-2015 Adept Technology
@@ -20,11 +20,11 @@
 */
 
 
-#ifndef STAGE_ROBOT_FACTORY_HH_
-#define STAGE_ROBOT_FACTORY_HH_
+#ifndef STAGE_ROBOT_FACTORY_H_
+#define STAGE_ROBOT_FACTORY_H_
 
-#include "MobileSim.hh"
-#include "RobotFactory.hh"
+#include "MobileSim.h"
+#include "RobotFactory.h"
 #include "ariaUtil.h"
 #include "stage.h"
 
@@ -32,11 +32,11 @@ class StageRobotFactory : public virtual RobotFactory {
 public:
   StageRobotFactory(stg_world_t *world, const std::string& modelName, double
 start_x, double start_y, double start_th, const MobileSim::Options *userOpts);
-  StageRobotFactory(stg_world_t *world, const std::string& modelName, 
-    mobilesim_get_pose_cb_t get_start_cb, 
+  StageRobotFactory(stg_world_t *world, const std::string& modelName,
+    mobilesim_get_pose_cb_t get_start_cb,
     mobilesim_get_bounds_cb_t get_bounds_cb, bool start_outside_bounds,
     const MobileSim::Options *userOpts);
-  virtual ~StageRobotFactory() {} 
+  virtual ~StageRobotFactory() {}
 protected:
   virtual RobotInterface *createRobot(const std::string& modelName, const std::string& requestedRobotName = "");
   virtual RobotInterface *createStubRobot(const std::string& modelName, const std::string& requestedRobotName = "");

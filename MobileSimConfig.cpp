@@ -1,4 +1,4 @@
-/*  
+/*
     (C) Copyright 2005, ActivMedia Robotics LLC <http://www.activmedia.com>
     (C) Copyright 2006-2010 MobileRobots, Inc. <http://www.mobilerobots.com>
     (C) Copyright 2011-2015 Adept MobileRobots <http://www.mobilerobots.com>
@@ -19,7 +19,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "Config.hh"
+#include "MobileSimConfig.h"
 
 void MobileSimConfig::updateRecentMaps(const std::string& /*newmapfile*/)
 {

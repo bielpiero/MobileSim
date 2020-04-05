@@ -1,4 +1,4 @@
-/*  
+/*
     (C) Copyright 2005, ActivMedia Robotics LLC <http://www.activmedia.com>
     (C) Copyright 2006-2010 MobileRobots, Inc. <http://www.mobilerobots.com>
     (C) Copyright 2011-2015 Adept Technology
@@ -19,10 +19,10 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _EP_STAGE_INTERFACE_HH_
-#define _EP_STAGE_INTERFACE_HH_
+#ifndef _EP_STAGE_INTERFACE_H_
+#define _EP_STAGE_INTERFACE_H_
 
-#include "RobotInterface.hh"
+#include "RobotInterface.h"
 //#include "ArMutex.h"
 #include <string>
 #include <set>
@@ -106,7 +106,7 @@ class StageInterface : public virtual RobotInterface
 
     /** @groupname Utilities for accessing Stage */
     //@{
-    
+
   private:
     //static ArMutex stageWorldMutex; ///< Mutex for calls to Stage affecting the world (models can be individually locked)
 
@@ -234,6 +234,6 @@ class StageInterface : public virtual RobotInterface
     virtual void updateBatteryChargeState(ArRobotPacket *pkt);
 };
 
- 
+
 
 #endif

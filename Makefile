@@ -1,6 +1,6 @@
 
 # Makefile for MobileSim.
-# 
+#
 # This Makefile should work on Linux, MinGW on Windows, Mac OSX, and perhaps other
 # Unix-like systems as well.
 #
@@ -25,20 +25,20 @@
 #   MOBILESIM_PROFILE   If defined, then profiling will be enabled with -pg for gprof.
 #
 # Used for variations on the tar.gz bindist package:
-#   TAR_DIRECTORY       If defined, put files to be tarred in a new directory with this name, rather than MobileSim-$(VERSION). 
+#   TAR_DIRECTORY       If defined, put files to be tarred in a new directory with this name, rather than MobileSim-$(VERSION).
 #   BINDIST_SUFFIX      If defined, append this string to the tar.gz package name.
 #
 # Other:
 #   TRACE        If set, trace this Makefile's commands for debugging
 #
-# The version number is set in dist/version.num. 
+# The version number is set in dist/version.num.
 #
 # You can also set DEBIAN_PKG_REV_APPEND to append something to a Debian package version field
 # (e.g. forpackaging fix)
 #
 # This Makefile tries to detect the host OS (MinGW, Mac OSX (darwin), fallback on assuming Linux)
 # using the $(host) Make variable.  If $(host) is MINGW32 or MINGW64, it is reset to MINGW, and
-# both platforms are treated the same.  (However only 32-bit MinGW install is really supported.) 
+# both platforms are treated the same.  (However only 32-bit MinGW install is really supported.)
 #
 # If MobileSim source code is detected (namely main.cc), then a rule for MobileSim depending
 # on MobileSim, libstage and libAria being built/rebuilt if neccesary is included, otherwise
@@ -110,10 +110,10 @@ ICONSET:=$(shell find icons.iconset)
 
 COMMON_DISTRIBUTED_FILES=Makefile LICENSE.txt Changes.txt README.md README.txt README.html screenshot.png PioneerRobotModels.world.inc AMROffice.map columbia.map icon.png MobileSim.desktop version.txt INSTALL.txt
 
-BINARY_DISTRIBUTED_FILES=$(COMMON_DISTRIBUTED_FILES) MobileSim$(binary_suffix) gdbhelper 
+BINARY_DISTRIBUTED_FILES=$(COMMON_DISTRIBUTED_FILES) MobileSim$(binary_suffix) gdbhelper
 
-SOURCE_DISTRIBUTED_FILES=$(COMMON_DISTRIBUTED_FILES) main.cc README.src.txt \
-  *.cpp *.h *.hh *.cc stage/src/*.c stage/src/*.h stage/src/stagecpp.cc \
+SOURCE_DISTRIBUTED_FILES=$(COMMON_DISTRIBUTED_FILES) main.cpp README.src.txt \
+  *.cpp *.h stage/src/*.c stage/src/*.h stage/src/stagecpp.cc \
   stage/src/worldfile.hh stage/src/worldfile.cc stage/src/config.h.in \
   stage/tests/*.c stage/configure.in stage/*/Makefile.in stage/*/Makefile.am \
   stage/*/*/Makefile.in stage/*/*/Makefile.am stage/Makefile.in \
@@ -124,7 +124,7 @@ SOURCE_DISTRIBUTED_FILES=$(COMMON_DISTRIBUTED_FILES) main.cc README.src.txt \
   stage/gtk-win/* stage/gtk-win/*/* stage/gtk-win/*/*/* stage/gtk-win/*/*/*/* \
   $(ICONSET) MobileSim.app/Info.plist
 SOURCE_DISTRIBUTED_FILES_EXEC=stage/configure stage/config.guess stage/config.sub\
-  stage/install-sh stage/missing  gdbhelper 
+  stage/install-sh stage/missing  gdbhelper
 
 SOURCE_DISTRIBUTED_FILES_MAYBE=stage/compile stage/depcomp stage/ltmain.sh
 
@@ -138,7 +138,7 @@ ifdef MOBILESIM_DEBUG
 
 $(info Debug build)
 CFLAGS+=-g -O0 -Wall -W -Wconversion # -W is the same as -Wextra but supported by gcc 2
-STAGE_CONFIGURE_ARGS:=--disable-optimize --enable-debug 
+STAGE_CONFIGURE_ARGS:=--disable-optimize --enable-debug
 datestamp:=$(shell date +%Y%m%d)
 -include lastDevReleaseVer
 ifdef lastDevReleaseVer
@@ -169,7 +169,7 @@ dist-all:
 else
 
 CFLAGS+=-O2
-STAGE_CONFIGURE_ARGS:=--enable-debug --enable-optimize=2 
+STAGE_CONFIGURE_ARGS:=--enable-debug --enable-optimize=2
 
 LFLAGS+=$(RELEASE_EXTRA_LFLAGS)
 
@@ -185,7 +185,7 @@ STAGE_CONFIGURE_ARGS+=--enable-profile --enable-debug --disable-optimize
 endif	 #MOBILESIM_PROFILE
 
 
-# Simbox rule overrides this 
+# Simbox rule overrides this
 ifndef TAR_DIRECTORY
 TAR_DIRECTORY:=MobileSim-$(VERSION)
 endif
@@ -218,8 +218,8 @@ ifeq ($(host),MINGW)
   binary_suffix:=.exe
 
   platformsuffix:=_WIN
-  #SYSTEM_LINK:=-lpthreadGC2 -lwinmm -lws2_32 -lstdc++ 
-  SYSTEM_LINK:=-lwinmm -lws2_32 -lpthread #-lstdc++ 
+  #SYSTEM_LINK:=-lpthreadGC2 -lwinmm -lws2_32 -lstdc++
+  SYSTEM_LINK:=-lwinmm -lws2_32 -lpthread #-lstdc++
 
   LIBNETPBM:=libnetpbm/lib/libnetpbm.a
 
@@ -257,7 +257,7 @@ else #else assume Linux or Unix-like (e.g MacOSX):
       $(warning Warning: GTK_DIR environment variable not set. Build may fail unless GTK has been installed on the system in default locations.)
     endif
     EXTRA_TARGETS=MobileSimAppBundle
-    EXTRA_TARGETS=MobileSim.app 
+    EXTRA_TARGETS=MobileSim.app
     AUTOCONF=$(GTK_DIR)/bin/autoconf
     AUTORECONF=$(GTK_DIR)/bin/autoreconf
     ACLOCAL=$(GTK_DIR)/bin/aclocal
@@ -265,7 +265,7 @@ else #else assume Linux or Unix-like (e.g MacOSX):
   else
     SYSTEM_LINK+=-lrt
     STAGE_AUTOCONF_ARGS:=
-    #ARIA_LINK:=-L$(ARIA)/lib -Wl,-Bstatic -lAria -Wl,-Bdynamic  
+    #ARIA_LINK:=-L$(ARIA)/lib -Wl,-Bstatic -lAria -Wl,-Bdynamic
     RELEASE_EXTRA_LFLAGS=-Wl,--gc-sections
   endif
 
@@ -274,39 +274,39 @@ else #else assume Linux or Unix-like (e.g MacOSX):
 endif #host is MINGW32 or not
 
 LIBARIA:=$(ARIA)/lib/libAria.a
-ARIA_CFLAGS:=-I$(ARIA)/include 
+ARIA_CFLAGS:=-I$(ARIA)/include
 
 SOURCES:=\
-	main.cc \
-	EmulatePioneer.cc \
-	RobotFactory.cc \
-	StageInterface.cc \
-	StageRobotFactory.cc \
-	CrashHandler.cc \
-	Config.cc \
-  MapLoader.cc \
+	main.cpp \
+	EmulatePioneer.cpp \
+	RobotFactory.cpp \
+	StageInterface.cpp \
+	StageRobotFactory.cpp \
+	CrashHandler.cpp \
+	MobileSimConfig.cpp \
+  MapLoader.cpp \
   ClientPacketReceiver.cpp \
-  Socket.cc \
-  ListeningSocket.cc
+  Socket.cpp \
+  ListeningSocket.cpp
 
 HEADERS:=\
-	EmulatePioneer.hh \
-	RobotFactory.hh \
-	StageInterface.hh \
-	StageRobotFactory.hh \
-	Config.hh \
-  MapLoader.hh \
+	EmulatePioneer.h \
+	RobotFactory.h \
+	StageInterface.h \
+	StageRobotFactory.h \
+	MobileSimConfig.h \
+  MapLoader.h \
   ClientPacketReceiver.h \
-  Socket.hh \
-  ListeningSocket.hh \
-  RobotFactory.hh \
+  Socket.h \
+  ListeningSocket.h \
+  RobotFactory.h \
   util.h \
-  NetworkDiscovery.hh
+  NetworkDiscovery.h
 
 _stage_all_src=$(shell ls stage/src/*.c stage/src/*.h stage/src/*.cc stage/src/*.hh)
 _stage_unused_src=$(shell ls stage/src/zoo_* stage/src/p_* stage/src/ptest.c stage/src/stest.c)
 STAGE_SRC=$(filter-out $(_stage_unused_src),$(_stage_all_src))
-  
+
 
 OBJS:=$(patsubst %.cc,%.o,$(patsubst %.cpp,%.o,$(SOURCES)))
 
@@ -322,7 +322,7 @@ ifndef STAGELIBDIR
 STAGELIBDIR:=$(STAGEDIR)/src
 endif
 
-# Root directory that install is relative too. Normally relative 
+# Root directory that install is relative too. Normally relative
 # to nothing (i.e. in /)
 ifndef DESTDIR
 DESTDIR:=
@@ -331,7 +331,7 @@ endif
 STAGELIBS:=$(STAGELIBDIR)/libstage.a $(STAGEDIR)/replace/libreplace.a
 
 
-# Run pkg-config to get GTK flags: 
+# Run pkg-config to get GTK flags:
 #GTK_LIBS=`pkg-config --libs gtk+-2.0`
 #GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
 GTK_LIBS:=$(shell PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)" $(PKG_CONFIG) --libs gtk+-2.0)
@@ -358,7 +358,7 @@ MSIM_CFLAGS := -DMOBILESIM_VERSION=\"$(VERSION)\" -DMOBILESIM_BUILDDATE="\"$(DAT
   -I. $(CFLAGS) -I$(STAGEDIR) -I$(STAGEDIR)/replace  -I$(STAGEDIR)/src \
 	$(GTK_CFLAGS) $(ARIA_CFLAGS)
 
-MSIM_LFLAGS := $(LFLAGS) 
+MSIM_LFLAGS := $(LFLAGS)
 
 
 # For installation:
@@ -400,7 +400,7 @@ endif
 	$(CC) -c $(MSIM_CFLAGS) -o $@ $<
 
 # Manually rebuild dep
-dep: clean clean-dep 
+dep: clean clean-dep
 	$(MAKE) Makefile.dep
 
 include Makefile.dep
@@ -451,7 +451,7 @@ MobileSim.app/Resources/MobileSim.icns: $(ICONSET)
 	-mkdir -p MobileSim.app/Resources
 	iconutil -c icns --output $@ icons.iconset
 
-# TODO should include PioneerRobotModels.world.inc, README etc. here and get MobileSim to 
+# TODO should include PioneerRobotModels.world.inc, README etc. here and get MobileSim to
 # use that instead of /usr/local/MobileSim/...
 
 # Add a resource fork to MobileSim plain binary. Only used on Mac OSX.
@@ -598,8 +598,8 @@ clean:
 
 cleanAll: clean
 
-distclean: 
-	-$(MAKE) -C $(STAGEDIR) -k -j1 clean distclean 
+distclean:
+	-$(MAKE) -C $(STAGEDIR) -k -j1 clean distclean
 	-rm *.o
 	-rm tags
 
@@ -608,7 +608,7 @@ sudo-install:
 	sudo $(MAKE) install
 
 ifdef MOBILESIM_RELEASE
-dist-install: $(BINARY_DISTRIBUTED_FILES) 
+dist-install: $(BINARY_DISTRIBUTED_FILES)
 	$(MAKE) install
 else
 dist-install:
@@ -616,7 +616,7 @@ dist-install:
 endif
 
 install:
-	install -d $(bindir) $(docdir) $(confdir) $(DESTDIR)/usr/share/applications $(sysbindir) 
+	install -d $(bindir) $(docdir) $(confdir) $(DESTDIR)/usr/share/applications $(sysbindir)
 	install -s -m 755 MobileSim$(binary_suffix) $(bindir)/MobileSim$(binary_suffix)
 	install -m 644 icon.png $(confdir)/icon.png
 	install -m 644 columbia.map $(confdir)/columbia.map
@@ -645,15 +645,15 @@ uninstall:
 rpm:
 	$(MAKE) real-rpm MOBILESIM_RELEASE=1
 
-real-rpm: $(BINARY_DISTRIBUTED_FILES) sudo-dist-install MobileSim.spec 
+real-rpm: $(BINARY_DISTRIBUTED_FILES) sudo-dist-install MobileSim.spec
 	sudo rpm -bb MobileSim.spec && cp /usr/src/redhat/RPMS/i386/MobileSim-$(VERSION_NODASH)-$(RPM_PKG_REV).i386.rpm . && echo "Copied RPM into current directory."
 
 
 debian: deb
-deb: 
+deb:
 	fakeroot debian/rules binary MOBILESIM_RELEASE=1
 
-dev-deb: 
+dev-deb:
 	fakeroot debian/rules binary
 	echo lastDevReleaseVer=$(DEV_RELEASE_VER) > lastDevReleaseVer
 
@@ -710,7 +710,7 @@ base-bindist: $(BINARY_DISTRIBUTED_FILES)
 	if test -n "$(EXCLUDE_FILES)"; then for f in $(EXCLUDE_FILES); do rm tmp/$(TAR_DIRECTORY)/$$f; done; fi
 	strip tmp/$(TAR_DIRECTORY)/MobileSim
 	cd tmp; tar cf ../$(PKGFILE_TAR) $(TAR_DIRECTORY)
-	gzip -9 $(PKGFILE_TAR) && mv $(PKGFILE_TAR).gz $(PKGFILE_TGZ) 
+	gzip -9 $(PKGFILE_TAR) && mv $(PKGFILE_TAR).gz $(PKGFILE_TGZ)
 	ln -sf $(PKGFILE_TGZ) MobileSim-latest.tgz
 	rm -r tmp
 	$(MAKE) $(DISTINFO_FILE)
@@ -747,7 +747,7 @@ MobileSim/md5sums: MobileSim/MobileSim$(binary_suffix) MobileSim/PioneerRobotMod
 #	@if [ ! -e /is_MTX_chroot ] ; then \
 #		echo "Cannot build MTX generation (4.0+) releases (like SimBox) except on the official MTX chroot"; \
 #		exit -1; \
-#	fi; 
+#	fi;
 
 release-simbank: release-simbox
 

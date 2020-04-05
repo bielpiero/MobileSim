@@ -1,4 +1,4 @@
-/*  
+/*
     Copyright (C) 2005, ActivMedia Robotics LLC <http://www.activmedia.com>
     Copyright (C) 2006-2010 MobileRobots, Inc. <http://www.mobilerobots.com>
     Copyright (C) 2011-2015 Adept Technology
@@ -20,14 +20,14 @@
 */
 
 
-#ifndef ROBOT_FACTORY_HH_
-#define ROBOT_FACTORY_HH_
+#ifndef ROBOT_FACTORY_H_
+#define ROBOT_FACTORY_H_
 
 #include <string>
 #include <set>
 #include <queue>
 //#include <deque>
-#include "RobotInterface.hh"
+#include "RobotInterface.h"
 #include "ArSocket.h"
 #include <ArMutex.h>
 

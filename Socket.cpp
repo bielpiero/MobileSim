@@ -19,8 +19,8 @@
  *
  */
 
-#include "MobileSim.hh"
-#include "Socket.hh"
+#include "MobileSim.h"
+#include "Socket.h"
 #include <sys/stat.h>
 #include <unistd.h>
 

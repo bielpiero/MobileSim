@@ -1,4 +1,4 @@
-/*  
+/*
     (C) Copyright 2005, ActivMedia Robotics LLC <http://www.activmedia.com>
     (C) Copyright 2006-2010 MobileRobots, Inc. <http://www.mobilerobots.com>
     (C) Copyright 2011-2015 Adept Technology
@@ -20,13 +20,13 @@
 */
 
 
-#include "MobileSim.hh"
-#include "StageRobotFactory.hh"
-#include "StageInterface.hh"
+#include "MobileSim.h"
+#include "StageRobotFactory.h"
+#include "StageInterface.h"
 
-StageRobotFactory::StageRobotFactory(stg_world_t* world, const std::string& modelName, 
-  double start_x, double start_y, double start_th, 
-  const MobileSim::Options *userOpts) 
+StageRobotFactory::StageRobotFactory(stg_world_t* world, const std::string& modelName,
+  double start_x, double start_y, double start_th,
+  const MobileSim::Options *userOpts)
 :
   RobotFactory(modelName, userOpts),
   myWorld(world),
@@ -37,7 +37,7 @@ StageRobotFactory::StageRobotFactory(stg_world_t* world, const std::string& mode
   myStartPos.a = start_th / 1000.0;
 }
 
-StageRobotFactory::StageRobotFactory(stg_world_t *world, const std::string& modelName, 
+StageRobotFactory::StageRobotFactory(stg_world_t *world, const std::string& modelName,
   mobilesim_get_pose_cb_t *get_start_cb,
   mobilesim_get_bounds_cb_t *get_bounds_cb, bool start_outside_bounds,
   const MobileSim::Options *userOpts)
@@ -55,7 +55,7 @@ RobotInterface* StageRobotFactory::createRobot(const std::string& modelName, con
 {
   //stg_world_lock(myWorld);
   stg_model_t* model;
-  if(requestedRobotName == "") 
+  if(requestedRobotName == "")
   {
     stg_print_msg("StageRobotFactory: Creating robot of type %s...", modelName.c_str());
     model = stg_world_new_model(myWorld, (char*)modelName.c_str(), NULL, NULL);
@@ -63,10 +63,10 @@ RobotInterface* StageRobotFactory::createRobot(const std::string& modelName, con
   else
   {
     stg_print_msg("StageRobotFactory: Creating robot of type %s with name %s...", modelName.c_str(), requestedRobotName.c_str());
-    model = stg_world_new_model(myWorld, (char*)modelName.c_str(), NULL, (char*) requestedRobotName.c_str()); 
+    model = stg_world_new_model(myWorld, (char*)modelName.c_str(), NULL, (char*) requestedRobotName.c_str());
   }
   //print_debug("created new position model 0x%x", model);
-    // cast should be safe, new_model should be making copies of those strings 
+    // cast should be safe, new_model should be making copies of those strings
   if(!model) {
     stg_print_error("StageRobotFactory: stage could not create a model of type \"%s\".", modelName.c_str());
     return NULL;
@@ -106,7 +106,7 @@ RobotInterface* StageRobotFactory::createRobot(const std::string& modelName, con
   //if(!stg_model_lock(msgs)) return NULL;  // messages model destroyed (somehow!)
   //stg_messages_send(msgs, NULL, STG_MSG_INFORMATION, "Robot factory for model type %s created a new robot (%s).", modelName.c_str(), name.c_str());
   //stg_model_unlock(msgs);
-  
+
 
   // TODO: test. does this cause the crash?
   //stg_world_display_message(myWorld, 0, NULL, STG_MSG_INFORMATION, "Robot factory for model type %s created a new robot (%s).", modelName.c_str(), name.c_str());

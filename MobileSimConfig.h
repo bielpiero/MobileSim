@@ -1,4 +1,4 @@
-/*  
+/*
  *  Copyright (C) 2011-2015 Adept Technology
  *  Copyright (C) 2016-2017 Omron Adept Technologies
  *
@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef MOBILESIM_CONFIG_HH
-#define MOBILESIM_CONFIG_HH
+#ifndef MOBILESIM_CONFIG_H
+#define MOBILESIM_CONFIG_H
 
 #include "ArConfig.h"
 

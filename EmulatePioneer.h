@@ -21,11 +21,11 @@
  *
  */
 
-#ifndef EP_EMULATE_PIONEER_HH_
-#define EP_EMULATE_PIONEER_HH_
+#ifndef EP_EMULATE_PIONEER_H_
+#define EP_EMULATE_PIONEER_H_
 
-#include "RobotInterface.hh"
-#include "MapLoader.hh"
+#include "RobotInterface.h"
+#include "MapLoader.h"
 
 #include <assert.h>
 //#include <pthread.h>
@@ -51,7 +51,7 @@ class ArDeviceConnection;
 #define MAX_PACKET_PAYLOAD_SIZE   200   // Ignore or truncate packets which claim to have more bytes of data than this
 
 /* What version of ARCOS to claim we are in the CONFIG packet */
-#define FIRMWARE_VER_MAJ 'S'  
+#define FIRMWARE_VER_MAJ 'S'
 #define FIRMWARE_VER_MIN '0'
 
 /* Defauts for settings in the config file: */
@@ -113,8 +113,8 @@ enum {
 };
 
 
-/** Robot parameters. There are read from the 
- *  Stage (or other) configuration. Clients cannot change these at runtime. 
+/** Robot parameters. There are read from the
+ *  Stage (or other) configuration. Clients cannot change these at runtime.
  *  @todo Read more params from model definition in Stage world. Need mechanism
  *  in Stage worldfile for adding arbitrary properties to models.
  */
@@ -149,7 +149,7 @@ public:
     int Sim_MaxSonarReadingsPerSIP;
 
     /** Normally motor stall flag is only set if trying to drive forward and
-     * backwards.  Set this to true if stall flag should be set even if 
+     * backwards.  Set this to true if stall flag should be set even if
      * there is no translational velocity; however this could make it hard
      * for robots to extract themselves from a collision by rotating.
      * (Real robots usually have enough power to scrape out of a collision
@@ -157,7 +157,7 @@ public:
      */
     bool Sim_StallOnRot;
 
-    /** What type of batteries the robot has. 
+    /** What type of batteries the robot has.
         As of Nov. 2011/ARCOS 3 Battery Type 2 means nickel with State of Charge, all others are either lead or act the same.
      */
     int BatteryType;
@@ -165,7 +165,7 @@ public:
     int GPSPosX, GPSPosY; // GPS mounting position, robot local coordinate system, mm
 
     RobotParams() :
-      SIPFreq(DEFAULT_SIP_FREQ), 
+      SIPFreq(DEFAULT_SIP_FREQ),
       WatchdogTime(DEFAULT_WATCHDOG_TIME),
 
       DistConvFactor(DEFAULT_DISTCONV),
@@ -241,7 +241,7 @@ public:
 
 
 /** Base class for packet generators */
-class PacketGenerator 
+class PacketGenerator
 {
 protected:
   RobotInterface* robotInterface; ///< Robot interface to obtain data from
@@ -313,8 +313,8 @@ protected:
 public:
   SIPGenerator(RobotInterface* _robotInterface = 0, RobotParams* _params = 0) :
     PacketGenerator(_robotInterface, _params),
-    xPosAccum(0), yPosAccum(0), 
-    firstSonarReadingToSend(0), 
+    xPosAccum(0), yPosAccum(0),
+    firstSonarReadingToSend(0),
     logDataSent(false),
     robotMoved(false)
   {
@@ -349,12 +349,12 @@ public:
   /* Construct one laser data packet, if available. This will only contain some of the laser
    * readings: there are too many to put in one packet.  After a call to this
    * method returns the last packet in a group, it returns NULL. The next call
-   * will return a packet with the first group of packets.   
+   * will return a packet with the first group of packets.
    * If there is no laser data available, or we haven't been started with
    * start(), then return NULL.
    * If the ExtraReadingInfo flag is set, then the packet ID
-   * will be 0x61 instead of 0x60, and each reading in the packet will be followed 
-   * by two bytes of extra info. The first 4 bits of the first byte contains a 
+   * will be 0x61 instead of 0x60, and each reading in the packet will be followed
+   * by two bytes of extra info. The first 4 bits of the first byte contains a
    * reflectance value (0 for normal).
    *
    * So, you can use this method like this:
@@ -387,7 +387,7 @@ public:
 
 
 /** This class represents the state of one client session. It is created at the
- * beginning of the session when the client connects, and is destroyed when the client disconnects. 
+ * beginning of the session when the client connects, and is destroyed when the client disconnects.
  */
 class Session {
 public:
@@ -463,13 +463,13 @@ public:
  *
  *  EmulatePioneer can be used in two ways.  You can either give it
  *  an already-connected client socket when constructing it (see
- *  EmulatePioneer::EmulatePioneer(RobotInterface*, std::string, ArTCPSocket*)), 
+ *  EmulatePioneer::EmulatePioneer(RobotInterface*, std::string, ArTCPSocket*)),
  *  or it can listen for new clients itself on the first available port number
  *  after the default (see EmulatePioneer::EmulatePioneer(RobotInterface*,
  *  std::string, int)
  *
  *  @todo eliminate some of the useless accessors
- * 
+ *
  */
 class EmulatePioneer : public LogInterface
 {
@@ -494,7 +494,7 @@ class EmulatePioneer : public LogInterface
 
 
     /** Create a new EmulatePioneer using the given RobotInterface and robot
-     *  model, and use the given client TCP socket for communication. 
+     *  model, and use the given client TCP socket for communication.
      *  The socket must already be connected to the client. EmulatePioneer will
      *  not reopen it.
      */
@@ -521,7 +521,7 @@ public:
       myApplicationVersion = appVersion;
     }
 
-    void setVerbose(bool v) { 
+    void setVerbose(bool v) {
       myVerbose = v;
     }
 
@@ -582,7 +582,7 @@ public:
 
     void loadMapObjects(ArMap *newmap);
 
-protected:    
+protected:
 
     /** Called after successfuly handshake; session has started, get ready to send and receive normal commands
     */
@@ -645,7 +645,7 @@ public:
 
     RobotInterface* robotInterface;
     RobotParams params;
-    
+
     int myTCPPort, myRequestedTCPPort;
     ArSocket myListenSocket;
     ArSocket *myClientSocket;
@@ -660,15 +660,15 @@ public:
 
     ArDeviceConnection *clientConnection;
 
-    /** Get a signed short integer from a command packet. 
-     *  Unpack three bytes from the packet's data buffer. The first byte 
+    /** Get a signed short integer from a command packet.
+     *  Unpack three bytes from the packet's data buffer. The first byte
      *  determines the sign of the integer, the second and third bytes are
-     *  the absolute value of the integer. 
+     *  the absolute value of the integer.
      *  No check is made that the packet's buffer contains enough bytes.
      */
-    ArTypes::Byte2 getIntFromPacket(ArRobotPacket* pkt); 
+    ArTypes::Byte2 getIntFromPacket(ArRobotPacket* pkt);
 
-    long initialPoseX, initialPoseY; 
+    long initialPoseX, initialPoseY;
     int initialPoseTheta;
     bool haveInitialPose;
     std::string myApplicationName;
@@ -698,10 +698,10 @@ public:
     bool useListenSocket;
     bool warn_unsupported_commands;
 
-    std::list< std::vector<ArPose> > badGPSSectorVertices; 
+    std::list< std::vector<ArPose> > badGPSSectorVertices;
     bool insideBadGPSSector(const ArPose& p);
 
-    
+
     void changeDigout(ArTypes::UByte mask, ArTypes::UByte states)
     {
       const ArTypes::UByte curr = robotInterface->getDigoutState();

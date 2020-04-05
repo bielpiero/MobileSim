@@ -1,7 +1,7 @@
-#ifndef _NETWORK_DISCOVERY_HH_
-#define _NETWORK_DISCOVERY_HH_
+#ifndef _NETWORK_DISCOVERY_H_
+#define _NETWORK_DISCOVERY_H_
 
-/* 
+/*
     Copyright (C) 2016-2017 Omron Adept Technologies
 
     This is free software; you can redistribute it and/or modify
@@ -27,17 +27,17 @@
 
 /**  This object listens for UDP messages on port 30718, and responds
    with some identifiying information to certain requests.  This allows
-   clients to search the local network for instances of MobileSim by 
+   clients to search the local network for instances of MobileSim by
    sending broadcast messages to the network.  For client-side implementation
    see DiscoverWiBox.py in ARIA Python code.
 
    Discovery requests must consist of four bytes with value 0xf6 (0, 0, 0, 0xf6).
-  
+
    The response packet will be 30 null bytes except byte 3 will be 0xF7, byte
    8 will be 0xFA and byte 9 will be OxFB.  Byte 3 being 0xF7 identifies this
    as a valid response to a request of 0xF6, and 0xFA,0xFB identifies it as
    MobileSim responding.
-     
+
    See <http://wiki.lantronix.com/developer/Lantronix_Discovery_Protocol>.
 */
 
